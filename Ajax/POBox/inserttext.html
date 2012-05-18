@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>test</title>
+<script language="JavaScript" src="debug.js"></script>
+</head>
+<body>
+
+<form>
+<textarea name="text" id="text" wrap='virtual' rows='10' cols='70' align='top' value="kkkk">
+abcdefghijklo
+</textarea>
+</form>
+
+<script type="text/javascript">
+
+document.onkeypress = keypress;
+
+function keypress(){
+  t = document.getElementById("text");
+  insert(t,"abcdefg");
+  return false;
+}
+
+var startpos = 0, endpos = 0;
+
+function calcselpos(obj){ textareaの選択場所を取得
+  if(obj.setSelectionRange ){ // FF/Mozila
+    startpos = obj.selectionStart;
+    endpos = obj.selectionEnd;
+  }
+  else if(document.selection.createRange ){ // IE?
+    sel =document.selection.createRange();
+    r = obj.createTextRange();
+    textlen = r.text.length;
+    r.moveToPoint(sel.offsetLeft,sel.offsetTop);
+    r.moveEnd("textedit");
+
+    startpos = textlen - r.text.length
+    endpos = startpos + sel.text.length;
+  }
+}
+
+function setcursor(obj,pos){ // textareaのposにカーソル移動
+  if(obj.setSelectionRange ){ // FF/Mozila
+    obj.setSelectionRange(pos,pos);
+  }
+  else if(document.selection.createRange ){ // IE?
+    e = obj.createTextRange();
+    tx = obj.value.substr(0,pos);
+    pl = tx.split(/\n/);
+    e.collapse(true);
+    e.moveStart("character",pos-pl.length+1);
+    e.text=e.text+"";
+    e.collapse(false);
+    e.select();
+  }
+}
+
+function insert(obj, replace){
+  calcselpos(obj);
+
+  text = obj.value;
+  s = text.substr(0,startpos);
+  e = text.substr(endpos,text.length-endpos);
+  obj.value = s + replace + e;
+  newpos = (s + replace).length;
+
+  setcursor(obj,newpos);
+}
+
+
+/* bl = 1 →IE, 2 → mozilla, 3 → DOMのみ使用可, 0 → 使用不可  */
+
+/*
+alert(String("judge"));
+
+
+
+if( String("jadge") ){
+ bl=3;
+} else if( document.getElementById ){
+ bl=4;
+}
+if( document.getElementById("Message").setSelectionRange ){
+  bl=2;
+} else if( document.selection.createRange ){
+  bl=1;
+}*/
+</script>
+
+</body>
+</html>

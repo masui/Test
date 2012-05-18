@@ -1,0 +1,206 @@
+This is pTeX, Version 3.141592-p3.1.10 (utf8.sjis) (Web2C 7.5.4) (format=platex 2009.8.28)  23 SEP 2011 16:51
+**junk
+(./junk.tex
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2003/12/01> patch level 0)
+(/Applications/pTeX.app/teTeX/share/texmf/ptex/platex/base/tbook.cls
+Document Class: tbook 2006/06/27 v1.6 Standard pLaTeX class
+\c@@paper=\count81
+(/Applications/pTeX.app/teTeX/share/texmf/ptex/platex/base/tbk10.clo
+File: tbk10.clo 2006/06/27 v1.6 Standard pLaTeX file (size option)
+)
+(/Applications/pTeX.app/teTeX/share/texmf/ptex/platex/base/plext.sty
+Package: plext 
+File: plext.dtx 2001/09/26 v1.2 pLaTeX package file
+\@floatbox=\box41
+\floatwidth=\dimen118
+\floatheight=\dimen119
+\floatruletick=\dimen120
+\captionfloatsep=\dimen121
+\captionwidth=\dimen122
+\@captionbox=\box42
+\save@ybaselineshift=\dimen123
+\save@tbaselineshift=\dimen124
+\@picwd=\dimen125
+\rensujiskip=\skip41
+)
+\c@part=\count82
+\c@chapter=\count83
+\c@section=\count84
+\c@subsection=\count85
+\c@subsubsection=\count86
+\c@paragraph=\count87
+\c@subparagraph=\count88
+\c@figure=\count89
+\c@table=\count90
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\symmincho=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
+(Font)                  JY1/mc/m/n --> JY1/gt/m/n on input line 684.
+\toclineskip=\dimen126
+\@lnumwidth=\dimen127
+\bibindent=\dimen128
+\heisei=\count91
+)
+(./floatflt.sty
+Package: floatflt 1997/07/16 v. 1.31
+\c@OptionTest=\count92
+\figbox=\box43
+\tabbox=\box44
+\pagebox=\box45
+\ffigcount=\count93
+\ftabcount=\count94
+\fftest=\count95
+\hangcount=\count96
+\nosuccesstryfig=\count97
+\nosuccesstrytab=\count98
+\figgutter=\dimen129
+\tabgutter=\dimen130
+\htdone=\dimen131
+\pageht=\dimen132
+\startpageht=\dimen133
+\tabbredd=\dimen134
+\floatfltwidth=\dimen135
+\fltitemwidth=\dimen136
+\outputpretest=\toks15
+)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/Applications/pTeX.app/teTeX/share/texmf/tex/latex/graphics/dvipdfmx-contrib-l
+atex/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/graphics.cfg
+File: graphics.cfg 2005/02/03 v1.3 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: dvips.def on input line 81.
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen137
+\Gin@req@width=\dimen138
+)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+\@indexfile=\write3
+\openout3 = `junk.idx'.
+
+
+Writing index file junk.idx
+
+LaTeX Warning: Unused global option(s):
+    [papersize].
+
+(./junk.aux (./fractal.aux))
+\openout1 = `junk.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+ 《縦組モード》
+File: 0ace712fba59ecc60fc38d1c93633f6d.png Graphic file (type eps)
+
+<0ace712fba59ecc60fc38d1c93633f6d.png>
+Overfull \hbox (63.04341pt too wide) in paragraph at lines 17--18
+[][] 
+ []
+
+[1
+
+]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <20.74> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 20.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <20.74> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 20.
+ (./junk.toc
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+)
+\tf@toc=\write4
+\openout4 = `junk.toc'.
+
+ [1
+
+
+]
+  
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 26.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 26.
+File: b8023bc4426a31f2b45e07708d93378e.png Graphic file (type eps)
+<b8023bc4426a31f2b45e07708d93378e.png>
+Package floatflt Message: Floating figure 1 set on page 1
+
+LaTeX Warning: Reference `DiskInventoryX' on page 1 undefined on input line 39.
+
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 47.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 47.
+[1
+
+
+] [2]
+\openout2 = `fractal.aux'.
+
+ (./fractal.tex
+Overfull \vbox (3.8581pt too high) has occurred while \output is active []
+
+
+[3
+
+]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 17.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 17.
+ [4]) [5] (./junk.ind [6
+
+
+
+
+]) (./junk.aux (./fractal.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 831 strings out of 94681
+ 10183 string characters out of 1174652
+ 69859 words of memory out of 1500000
+ 4142 multiletter control sequences out of 10000+50000
+ 14536 words of font info for 57 fonts, out of 1200000 for 2000
+ 566 hyphenation exceptions out of 8191
+ 25i,9n,21p,906b,284s stack positions out of 5000i,500n,6000p,200000b,5000s
+
+Output written on junk.dvi (8 pages, 13816 bytes).

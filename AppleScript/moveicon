@@ -1,0 +1,5 @@
+require 'rubygems'
+require 'appscript'
+include Appscript
+
+app('Finder').desktop.files['junkjunk.txt'].desktop_position.set([50,200])

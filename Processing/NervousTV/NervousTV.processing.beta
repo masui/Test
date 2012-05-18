@@ -1,0 +1,46 @@
+// nervousTV
+// Copyright (c) 2002 Edo Tannenbaum
+// ported and arranged by Kentaro Fukuchi
+// This code is released under the GNU General Public License.
+
+// BImageが使えないので駄目
+
+final int W = 160;
+final int H = 120;
+final int PLANES = 128;
+boolean newFrame = false;
+BImage[] buffer = new BImage[PLANES];
+int bufferIdx = 0;
+float noiseX = 0.0;
+
+void setup()
+{
+    int i;
+    
+    size(W, H);
+    beginVideo(W, H, 30);
+    for(i=0; i<PLANES; i++) {
+	buffer[i] = new BImage(W, H);
+    }
+}
+
+void videoEvent()
+{
+    newFrame = true;
+}
+
+void loop()
+{
+    int i, x, y;
+    if(newFrame) {
+	buffer[bufferIdx].replicate(video, 0, 0, W, H, 0, 0, W, H);
+	bufferIdx++;
+	newFrame = false;
+	if(bufferIdx == PLANES) {
+	    bufferIdx = 0;
+	}
+	i = int(noise(noiseX)*PLANES)+bufferIdx;
+	noiseX += 0.2;
+	image(buffer[i % PLANES], 0, 0);
+    }
+}

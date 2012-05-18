@@ -1,0 +1,28 @@
+require 'fileutils'
+require 'open-uri'
+
+wiki = 'http://Gyazz.com/HelloIME'
+rootpage = 'Index'
+
+def valid(path)
+  path =~ /\.[a-zA-Z]+$/
+end
+
+def create(wiki,path)
+  STDERR.puts path
+  if path =~ /^(.*)\/([^\/]+)$/ then
+    FileUtils.mkdir_p($1)
+  end
+  File.open(path,"w"){ |outfile|
+    open("#{wiki}/#{path}/text").each{ |line|
+      outfile.puts line
+    }
+  }
+end
+
+open("#{wiki}/#{rootpage}/text").each{ |line|
+  if line =~ /\[\[([^\[]+)\]\]/ then
+    pagepath = $1
+    create(wiki,pagepath) if valid(pagepath)
+  end
+}

@@ -1,0 +1,13 @@
+_m	new MapsApplicatoin()で生成される
+_c	コンパチかどうか
+
+function _script(src) {
+    var ret = '<' + 'script src="' + src + '"' +' type="text/javascript"><' + '/script>';
+    document.write(ret);
+}
+if (_c) {
+    _script("/mapfiles/maps.5.js");
+}
+/mapfiles/maps.5.js をロードしている。
+
+maps.5.js は90KBもあるJavaScriptプログラムである。数千行のJavaScriptって...

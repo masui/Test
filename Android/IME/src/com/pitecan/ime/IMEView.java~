@@ -1,0 +1,6 @@
+public class TextArea extends EditText {
+    private int start, end;
+
+    public TextArea(Context context, AttributeSet attrs) {
+	super(context,attrs);
+    }

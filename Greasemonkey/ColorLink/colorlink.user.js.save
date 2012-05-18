@@ -1,0 +1,76 @@
+// ColorLink.user.js
+// 2005.11.03
+// Copyright (c) 2005, Toshiyuki Masui
+// Released under the GPL license
+// http://pitecan.com
+//
+// ....................................................................
+//
+// This is a Greasemonkey user script.
+//
+// To install, you need Greasemonkey: http://greasemonkey.mozdev.org/
+// Then restart Firefox and revisit this script.
+// Under Tools, there will be a new menu item to "Install User Script".
+// Accept the default configuration and install.
+//
+// To uninstall, go to Tools/Manage User Scripts,
+// select "Hello World", and click Uninstall.
+//
+// ....................................................................
+//
+// ==UserScript==
+// @name ColorLink
+// @namespace http://pitecan.com/ColorLink
+// @description description here...
+// @include http://pitecan.com/*
+// ==/UserScript==
+
+// GM_setValueの値は文字列/論理値/整数じゃなきゃ駄目なんだって...
+// "2005,10,3,2345" みたいな文字列をセットすることにしよう。
+
+var allElements, thisElement;
+allElements = document.getElementsByTagName("a");
+for (var i = 0; i < allElements.length; i++) {
+  thisElement = allElements[i];
+
+  thisElement.onclick = function(event){ 
+    url = event.target;
+alert(url);
+    val = GM_getValue(url, "2000,0,1,0");
+    a = val.split(',');
+    year = parseInt(a[0]);
+    if(year < 2000) year += 1900;
+    month = parseInt(a[1]);
+    day = parseInt(a[2]);
+    date = new Date(year,month,day);
+    popularity = parseInt(a[3]);
+//    popularity = GM_getValue(url, 0.0);
+alert("old popularity = " + popularity);
+
+    newpopularity = popularity + (10000 - popularity) / 2;
+    newdate = new Date;
+alert(newpopularity);
+
+    newvalue = newdate.getYear() + "," + newdate.getMonth() + "," +
+               newdate.getDate() + "," + newpopularity;
+alert(newvalue);
+    GM_setValue(url, newvalue);
+//    GM_setValue(url, newpopularity);
+savedpopularity = GM_getValue(url, "...");
+alert("saved popularity = " + savedpopularity);
+  }
+  
+  url = thisElement.href;
+  val = GM_getValue(url, "2000,0,1,0");
+  a = val.split(',');
+  year = parseInt(a[0]);
+  if(year < 2000) year += 1900;
+  month = parseInt(a[1]);
+  day = parseInt(a[2]);
+  date = new Date(year,month,day);
+  popularity = parseInt(a[3]);
+//  popularity = GM_getValue(url, 0.0);
+  if(popularity > 6000){
+    thisElement.style.backgroundColor= "#ffff00"
+  }
+}

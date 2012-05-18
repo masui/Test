@@ -1,0 +1,15 @@
+test = [1,2,3,4]
+
+File.open("db","w"){ |f|
+  Marshal.dump(test,f)
+}
+
+t = []
+File.open("db"){ |f|
+  t = Marshal.load(f)
+}
+
+puts t[2]
+
+
+

@@ -1,0 +1,18 @@
+require 'osx/cocoa'
+
+OSX::NSBundle.bundleWithPath("/Library/Frameworks/AppleRemote.framework").load
+OSX::ns_import 'AppleRemote'
+
+class AppleRemoteDelegate < OSX::NSObject
+#  addRubyMethod_withType('sendRemoteButtonEvent:pressedDown:remoteControl:', 'v@:ii@')
+  def sendRemoteButtonEvent_pressedDown_remoteControl(buttonIdentifier, pressDown, remoteControl)
+    puts "button #{buttonIdentifier}, pressed #{pressDown}"
+  end
+end
+
+d = AppleRemoteDelegate.alloc.init
+a = OSX::AppleRemote.alloc.initWithDelegate(d)
+
+a.startListening 0 
+OSX::NSApplication.sharedApplication.run
+

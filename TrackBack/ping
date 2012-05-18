@@ -1,0 +1,40 @@
+#
+# トラックバック技術仕様書 http://lowlife.jp/yasusii/stories/8.html
+# に従ってトラックバックを打つ練習をしてみる。
+#
+# 以下のようなデータをpostすればいいらしい。
+#
+#   POST http://www.foo.com/mt-tb.cgi/5
+#   Content-Type: application/x-www-form-urlencoded
+#   title=Foo+Bar&url=http://www.bar.com/&excerpt=My+Excerpt&blog_name=Foo
+#
+# net/http を使うと非常に簡単に実現できる。日本語の場合はUTF8にするのだろうか。
+#
+require 'net/http'
+require 'iconv'
+
+euc2utf = Iconv.new( "UTF-8", "EUC-JP")
+
+# title =     euc2utf.iconv('神田川巡航')
+# srcurl =    'http://pitecan.com/hobbies/Kandagawa/' # トラックバック元URL
+# excerpt =   euc2utf.iconv('東大先端研の妹尾特任教授、慶應大学の武山助教授らと神田川→隅田川→日本橋川の水路を一巡させてもらった。道から見る景色とは全く異なる世界を垣間見ることができて大変面白かった。 不覚にもデジカメを持って行くのを忘れてしまったため携帯カメラの画像しか撮っていない。')
+# blog_name = euc2utf.iconv('Pitecan blog')
+# dsthost =   'map.livedoor.com'
+# tbaddr =    '/map/tb/E139.45.31.2N35.41.26.2'
+
+title =     euc2utf.iconv('QuickML')
+srcurl =    'http://QuickML.com/' # トラックバック元URL
+excerpt =   euc2utf.iconv('QuickMLもよろしく!')
+blog_name = euc2utf.iconv('QuickML')
+
+dsthost =   'd.hatena.ne.jp'
+tbaddr =    '/keyword/%c1%fd%b0%e6%bd%d3%c7%b7'
+tbaddr =    euc2utf.iconv('/keyword/増井俊之')
+
+data = "title=#{title}&url=#{srcurl}&excerpt=#{excerpt}&blog_name=#{blog_name}"
+header = {'Content-Type' => 'application/x-www-form-urlencoded;charset=utf-8'}
+
+Net::HTTP.start(dsthost, 80) { |http|
+  response = http.post(tbaddr,data,header)
+  puts response.body
+}

@@ -1,0 +1,6 @@
+File.open("ejdic"){ |f|
+ f.each { |line|
+   a = line.split("\t")
+   puts a[0]
+ }
+}

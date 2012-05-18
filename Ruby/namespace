@@ -1,0 +1,29 @@
+module Strange
+  def inspect
+    "Strange Inspect"
+  end
+end
+
+def inspect
+  " outer inspect"
+end
+
+class TestClass
+#  include Strange
+
+  def inspect_xx
+    "class inspect"
+  end
+
+  def test
+    puts inspect
+  end
+end
+
+tc = TestClass.new
+tc.test
+
+
+
+
+

@@ -1,0 +1,18 @@
+require 'rubygems'
+require 'open-uri'
+require 'hpricot'
+
+# doc = Hpricot(open("http://pitecan.com/"))
+
+# puts doc.at("title").inner_html
+
+
+url = `osascript -e 'tell application "Firefox" to «class curl» of window 1'`
+doc = Hpricot(open(url))
+title = doc.at('title').inner_html
+puts url
+puts title
+
+
+
+

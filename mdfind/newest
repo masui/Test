@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+# -*- coding:utf-8 -*-
+#
+# % newest extension
+#
+# 最も新しいファイルを出力
+# Tipsに書く
+#
+
+pat = ARGV.shift
+unless pat then
+  STDERR.puts "Print the newest file with extension"
+  STDERR.puts "Usage:   % newest extension"
+  STDERR.puts "Example: % newest graffle"
+  exit
+end
+
+# matched = `mdfind -name #{pat}` 何故かこれでひっかからない場合があるような...
+matched = `mdfind #{pat}`
+exit if matched == ''
+
+#files = matched.split(/\n/).find_all { |file|
+#  file =~ /#{pat+'$'}/
+#}.sort { |a,b|
+#  File.mtime(b) <=> File.mtime(a)
+#}
+#puts files
+
+t = Time.local('1970')
+f = ''
+len = pat.length
+range = (-len-1..-1)
+matched.split(/\n/).find_all { |file|
+  # file =~ /#{pat+'$'}/
+  # file の最後尾が ".pat"
+  file[range] == '.'+pat
+}.each { |file|
+  modtime = File.mtime(file)
+  if t < modtime then
+    t = modtime
+    f = file
+  end
+}
+puts f
+
+#  puts "#{File.mtime(file).strftime('%Y%m%d%H%M%S')} #{file}"

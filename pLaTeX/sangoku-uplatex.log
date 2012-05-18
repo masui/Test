@@ -1,0 +1,30 @@
+This is pTeX, Version 3.141592-p3.1.11 (utf8.euc) (Web2C 7.5.4) (format=platex 2011.7.24)  22 SEP 2011 23:25
+**sangoku-uplatex
+(./sangoku-uplatex.tex
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2003/12/01> patch level 0)
+(/Applications/UpTeX.app/teTeX/share/texmf/ptex/platex/base/utarticle.cls
+Document Class: utarticle 2006/06/27 v1.6 Standard pLaTeX class
+\c@@paper=\count81
+(/Applications/UpTeX.app/teTeX/share/texmf/ptex/platex/base/utsize10.clo
+File: utsize10.clo 2006/06/27 v1.6 Standard pLaTeX file (size option)
+
+
+! LaTeX Error: KANJI Encoding scheme `JT2' unknown.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.52 \kanjiencoding{\kanjiencodingdefault}
+                                          %
+? x
+ 
+Here is how much of TeX's memory you used:
+ 79 strings out of 94681
+ 1220 string characters out of 1174371
+ 50377 words of memory out of 1500000
+ 3455 multiletter control sequences out of 10000+50000
+ 7511 words of font info for 31 fonts, out of 1200000 for 2000
+ 566 hyphenation exceptions out of 8191
+ 17i,0n,19p,118b,25s stack positions out of 5000i,500n,6000p,200000b,5000s
+No pages of output.

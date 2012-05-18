@@ -1,0 +1,7 @@
+:display "Hello, world!" at 30 with center size 20 style bold fade 1 label "hello"
++0
+:display "2004/9/1 17:39:21" transparency 50 at {50,15} size 40 color yellow label "text0"
+:slide "text0" by {300,0} duration 7
++5
+:display "2004/12/26 15:57:26" transparency 20 at {50,15} size 40 color yellow label "text1"
+:slide "text1" by {300,0} duration 7

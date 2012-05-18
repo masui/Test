@@ -1,0 +1,16 @@
+require 'rubygems'
+require 'mechanize'
+
+agent = Mechanize.new
+agent.get('http://b.hatena.ne.jp/masui/')
+src = agent.page.body
+
+# src =~ /<li><span class="label">ブックマーク数<\/span>(.*)<\/li>/
+# puts $1
+
+#while src.sub!(/<span class="label">(.*)<\/span>(.*)<\/li>/,'') do
+#  puts "#{$1} => #{$2}"
+#end
+
+agent.page.search()
+

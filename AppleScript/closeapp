@@ -1,0 +1,45 @@
+require 'rubygems'
+require 'appscript'
+include Appscript
+
+# Firefoxのウィンドウをドックに入れる
+app('Firefox').windows[1].miniaturized.set(true)
+
+# ファインダの窓をドックに入る
+# app("Finder").Finder_windows[1].collapsed.set(true)
+
+
+
+
+# app("Finder").Finder_windows[1].desktop_position  # .set([0, 44])
+
+
+# p app('Finder').Finder_windows[1].methods
+app('Finder').methods.each { | method |
+  puts method if method =~ /window/i
+}
+app('Finder').windows.methods.each { |method|
+  puts method if method =~ /colla/i
+}
+puts app('Finder').windows.name.get
+
+
+
+
+
+
+# p app("Finder").Finder_windows[0].name.get
+
+# app("Firefox").Finder_windows[1].close
+
+# app('Finder').desktop.files['junkjunk.txt'].desktop_position.set([50,400])
+
+#app('TextEdit').documents.end.make(
+#    :new => :document,
+#    :with_properties => {:text => "Hello World!\n"}
+#    )
+
+# p app('Finder').home.folders.name.get
+
+
+

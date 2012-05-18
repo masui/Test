@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/"?>
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<menubar>
+<menu label="メニュー1">
+<menupopup>
+<menuitem label="項目1"/>
+<menuitem label="項目2"/>
+<menuseparator/>
+<menuitem label="項目3"/>
+<menu label="サブメニュー">
+<menupopup>
+<menuitem label="項目4" oncommand="xxx()"/>
+<menuitem label="項目5"/>
+</menupopup>
+</menu>
+</menupopup>
+</menu>
+</menubar>
+
+<!-- 埋め込みスクリプト -->
+<script type="application/x-javascript"><![CDATA[
+function xxx(){
+  alert('アラート');
+}
+]]></script>
+
+</window>

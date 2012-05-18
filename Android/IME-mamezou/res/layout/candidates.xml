@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mamezou.android.im.MyCandidateView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent" android:id="@+id/candidatesListView"
+	android:clickable="true" android:choiceMode="singleChoice"
+	android:background="@color/candidateListBackground" 
+	android:focusableInTouchMode="true"/>

@@ -1,0 +1,11 @@
+  def dirtype(dir)
+    case dir
+    when 'up' then 'updown'
+    when 'down' then 'updown'
+    when 'left' then 'leftright'
+    when 'right' then 'leftright'
+    else ''
+    end
+  end
+
+puts dirtype('righlllt')

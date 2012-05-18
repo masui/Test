@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>title</title>
+<script language="JavaScript" src="test.js"></script>
+<script type="text/javascript">
+
+function tag(s){
+  var s1,s2,s3;
+  s = s.replace(/[\r\n]+/,'');
+  while(s.match(/^(.*)<(.*)$/)){
+    s1 = RegExp.$1;
+    s2 = RegExp.$2;
+    s = s1 + '&lt;' + s2;
+  }
+  while(a = s.match(/^(.*)\[\[(([^\]]|\][^\]]|[^\]]\])*)\]\](.*)$/)){
+    s1 = RegExp.$1;
+    s2 = RegExp.$2;
+    s3 = RegExp.$4;
+  }
+}
+
+</script>
+<link rel="stylesheet" href="test.css" type="text/css">
+<style type="text/css">
+<!--
+div.outer {
+}
+
+#kkk {
+  position: absolute;
+  left:200;
+  color:blue;
+}
+-->
+</style>
+</head>
+<body>
+
+<div class='outer'>
+  aaaaaa <span id='0_0'>abcdefg</span> <span id='0_1'>hijklmn</span> <span id='0_2'>opqrstu</span>
+</div>
+<div class='outer'>
+  <span id='1_0'>abcdefg</span><span id='1_1'>hijklmn</span> <span id='1_2'>opqrstu</span>
+</div>
+
+<script type="text/javascript">
+s = document.getElementById('0_1');
+alert(s.offsetLeft);
+s.style.position = 'absolute';
+s.style.left = '200';
+
+</script>
+
+</body>
+</html>
+
+

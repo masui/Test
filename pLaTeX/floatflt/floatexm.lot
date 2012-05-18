@@ -1,0 +1,4 @@
+\contentsline {table}{\numberline {1}{\ignorespaces The \texttt {floatingtable} environment with no \textit {option}.}}{2}
+\contentsline {table}{\numberline {2}{\ignorespaces The \texttt {floatingtable} environment with the \texttt {l} \textit {option}.}}{3}
+\contentsline {table}{\numberline {3}{\ignorespaces This \texttt {floatingtable} uses the \texttt {r} \textit {option}.}}{4}
+\contentsline {table}{\numberline {4}{\ignorespaces A \texttt {floatingtable} with the \texttt {p} \textit {option}.}}{5}

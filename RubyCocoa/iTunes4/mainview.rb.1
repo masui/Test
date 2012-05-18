@@ -1,0 +1,223 @@
+# -*- ruby -*-
+
+require 'osx/cocoa'
+include OSX
+
+class MainView < NSView
+
+  ib_action :upButtonUp
+  ib_action :downButtonUp
+  ib_action :rightButtonUp
+  ib_action :leftButtonUp
+  ib_action :delete
+  ib_action :fix
+
+  ib_outlets :itunes
+
+  def awakeFromNib
+    d = AppleRemoteDelegate.alloc.init
+    puts d
+    @appleRemote = OSX::AppleRemote.alloc.initWithDelegate(d)
+    puts @appleRemote
+    @appleRemote.startListening self
+  end
+
+  def initialize
+    puts "MainView initialize"
+
+    @selecting = false    # 文字選択中
+    @tup = Time.now
+    @tdown = Time.now
+    @patchars = []
+    @patchar = 'a'
+    @patind = 0
+    @button = nil
+    @fixed = false
+  end
+
+  def mouseDown(event)
+    puts 'mouseDown'
+    self
+  end
+
+  def mouseUp(event)
+    puts 'mouseUp'
+    self
+  end
+
+  def drawRect(rect)
+    # puts "--------------drawRect selecting = #{@selecting} patind=#{@patind}"
+    patlen = @patchars.length
+    patlen2 = patlen
+    if @selecting then
+      patlen2 = patlen - 1
+    end
+    patlen2 = 0 if patlen2 < 0
+    ox = 60
+    oy = 340
+
+    (0...patlen2).each { |i|
+      x = ox + i * 36 + 20
+      y = oy + 20
+      s = @patchars[i].dup
+      s.gsub!(/[\[\]]/,'')
+      image = NSImage.alloc.initByReferencingFile(s+'.png')
+      image.compositeToPoint_operation(NSPoint.new(x,y),NSCompositeSourceOver)
+    }
+
+ 
+    if @selecting then
+      img = (@button == 'up' ? 'abcdefg-list.png' :
+             @button == 'left' ? 'hijklm-list.png' :
+             @button == 'right' ? 'nopqrs-list.png' : 'tuvwxyz-list.png')
+      x = ox + patlen2 * 36
+      y = oy
+      if @button == 'up' then
+        x += 27
+        y -= 180
+        y += @patind * 36
+      end
+      if @button == 'down' then
+        x += 27
+        y += 30
+        y -= @patind * 36
+      end
+      if @button == 'left' then
+        y += 27
+        x += 36
+        x -= @patind * 27
+      end
+      if @button == 'right' then
+        y += 27
+        x -= 98
+        x += @patind * 27
+      end
+      image = NSImage.alloc.initByReferencingFile(img)
+      image.compositeToPoint_operation(NSPoint.new(x,y),NSCompositeSourceOver)
+    end
+    image = NSImage.alloc.initByReferencingFile('frame3.png')
+    image.compositeToPoint_operation(NSPoint.new(ox + patlen2 * 36,oy),NSCompositeSourceOver)
+
+
+    x = 10
+    y = 300
+    @itunes.matched.each { |name|
+      s = NSString.stringWithUTF8String(name.to_s)
+      next if s.nil?
+      s.drawAtPoint_withAttributes([x,y], nil)
+      y -= 15
+      break if y < 0
+    }
+
+    @appleRemote.startListening self
+  end
+
+  def buttonDown(event)
+#    @thread = Thread.start do
+#      loop do
+#        sleep(0.2)
+#        puts "sleeping"
+#      end
+#      puts "sleep end"
+#      setNeedsDisplay(true)
+#    end
+
+    @tdown = Time.now
+    if @tdown - @tup > 0.5 || @fixed then
+      @selecting = false
+      @patind = 0
+      @fixed = false
+    else
+      @selecting = true
+    end
+    setNeedsDisplay(true)
+  end
+
+#  def settimer
+#    @thread = Thread.start do
+#      @disptimer.invalidate if @disptimer
+#      @disptimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats(
+#         0.5, self, 'show:', nil, false)
+#      puts "SetTimer!"
+#    end
+#  end
+
+  def show
+    puts "Show!"
+    setNeedsDisplay(true)
+  end
+
+  def buttonUp(pat,long)
+    if @button != @oldbutton then
+      @oldbutton = @button
+      @selecting = false
+      @patind = 0
+    end
+
+    @tup = Time.now
+    if @tup - @tdown > 0.3 || long then # 長押し
+#    if @tup - @tdown < 0.5 && ! @selecting then
+      @patchar = "[#{pat}]"
+      @patchars << @patchar
+      @fixed = true
+    else
+      if @selecting then
+        @patind += 1
+        if @patind >= pat.length then
+          @patind = 0
+        end
+        @patchars.pop
+      else
+        @patind = 0
+      end
+      @patchars << pat[@patind,1]
+      @selecting = true
+      @timer.invalidate if @timer
+      @timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats(
+         1.5, self, 'fix:', nil, false)
+    end
+    # puts @patchars.join('/')
+    pat = @patchars.join('')
+    @itunes.match(pat)
+
+    setNeedsDisplay(true)
+  end
+
+  def upButtonUp(sender,long)
+    @button = 'up'
+    buttonUp('abcdefg',long)
+  end
+
+  def leftButtonUp(sender,long)
+    @button = 'left'
+    buttonUp('hijklm',nil)
+  end
+
+  def rightButtonUp(sender,long)
+    @button = 'right'
+    buttonUp('nopqrs',long)
+  end
+
+  def downButtonUp(sender,long)
+    @button = 'down'
+    buttonUp('tuvwxyz',long)
+  end
+
+  def delete
+    @patchars.pop
+    @selecting = false
+    @patind = 0
+    # puts @patchars.join('/')
+    pat = @patchars.join('')
+    @itunes.match(pat)
+    setNeedsDisplay(true)
+  end
+
+  def fix
+    @selecting = false
+    @patind = 0
+    @timer.invalidate if @timer
+    @timer = nil
+    setNeedsDisplay(true)
+  end
+end

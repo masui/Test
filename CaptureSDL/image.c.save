@@ -1,0 +1,247 @@
+//
+// 簡単な画像処理ライブラリ
+//
+// $Date: 2004/07/14 07:37:18 $
+// $Revision: 1.3 $
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "image.h"
+
+static int width = 0;
+static int height = 0;
+
+#define POS(x,y) ((y)*width+(x))
+#define P1(x,y) p1[POS(x,y)]
+#define P2(x,y) p2[POS(x,y)]
+
+static void checkinit()
+{
+	if(width == 0 || height == 0){
+		fprintf(stderr,"Initialization required\n");
+		exit(0);
+	}
+}
+
+void image_setsize(int w, int h)
+{
+	width = w;
+	height = h;
+}
+
+void image_copy(unsigned long *src, unsigned long *dst)
+{
+	int i;
+	checkinit();
+	for(i=0;i<width*height;i++){
+		*dst++ = *src++;
+	}
+}
+
+void image_invert(unsigned long *src, unsigned long *dst)
+{
+	int i;
+	unsigned long color;
+	
+	checkinit();
+	for(i=0;i<width*height;i++){
+		color = *src++;
+		*dst++ = COLOR(0xff-RED(color),0xff-GREEN(color),0xff-BLUE(color));
+	}
+}
+
+// 二値画像を得る
+void get_bright_area(unsigned long *src, unsigned long *dst)
+{
+	int i;
+	unsigned long color;
+	checkinit();
+	for(i=0;i<width*height;i++){
+		color = *src++;
+		*dst++ = (BRIGHTP(color) ? 1 : 0);
+	}
+}
+
+// 二値画像に色をつける
+void color_binary(unsigned long *src, unsigned long *dst,
+		  unsigned long fgcolor, unsigned long bgcolor)
+{
+	int i;
+	unsigned long color;
+	checkinit();
+	for(i=0;i<width*height;i++){
+		*dst++ = (*src++ ? fgcolor : bgcolor);
+	}
+}
+
+//int lut[640*480]; // Lookup table
+
+#define NEWLABEL \
+	P2(x,y) = label; \
+	lut[label] = label; \
+	label++;
+
+// 二値画像p1を領域に分けて領域番号をp2に格納
+// 領域番号は1から
+void label_area(unsigned long *p1, unsigned long *p2)
+{
+	int x,y,i,j;
+	int *lut;
+	int label;
+	int l1,l2;
+	
+	checkinit();
+
+	lut = (int*)calloc(width * height, sizeof(int));
+	
+	label = 1;
+	for(y=0;y<height;y++){
+		for(x=0;x<width;x++){
+			P2(x,y) = 0;
+		}
+	}
+	for(y=0;y<height;y++){
+		for(x=0;x<width;x++){
+			if(P1(x,y) == 1){
+				if(x == 0){
+					if(y > 0){
+						if(P2(x,y-1) > 0){
+							P2(x,y) = P2(x,y-1);
+						}
+						else {
+							P2(x,y) = label;
+							lut[label] = label;
+							label++;
+							//NEWLABEL;
+						}
+					}
+					else {
+						P2(x,y) = label;
+						lut[label] = label;
+						label++;
+						//NEWLABEL;
+					}
+				}
+				else {
+					if(y == 0){
+						if(P2(x-1,y) > 0){
+							P2(x,y) = P2(x-1,y);
+						}
+						else {
+							P2(x,y) = label;
+							lut[label] = label;
+							label++;
+							//NEWLABEL;
+						}
+					}
+					else {
+						l1 = P2(x,y-1);
+						l2 = P2(x-1,y);
+						if(l1 == 0 && l2 == 0){
+							P2(x,y) = label;
+							lut[label] = label;
+							label++;
+							//NEWLABEL;
+						}
+						else {
+							if(l1 == 0){
+								P2(x,y) = l2;
+							}
+							else if(l2 == 0){
+								P2(x,y) = l1;
+							}
+							else {
+								if(l1 == l2){
+									P2(x,y) = l1;
+								}
+								else {
+									P2(x,y) = l2;
+									for(i=0;i<label;i++){
+										if(lut[i] == l1){
+											lut[i] = l2;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	for(y=0;y<height;y++){
+		for(x=0;x<width;x++){
+			P2(x,y) = lut[P2(x,y)];
+		}
+	}
+
+	free(lut);
+}
+
+// 最大の領域を求める
+void get_largest_area(unsigned long *p1, unsigned long *p2)
+{
+	int i,x,y,l;
+	unsigned int *labelcount;
+	int nlabels;
+	int max, maxlabel;
+	
+	//	labelcount = (unsigned long*)malloc(width * height * sizeof(unsigned int));
+	//	for(i=0;i<width*height;i++){
+	//		labelcount[i] = 0;
+	//	}
+	labelcount = (unsigned long*)calloc(width * height, sizeof(unsigned int));
+
+	nlabels = 0;
+	for(y=0;y<height;y++){
+		for(x=0;x<width;x++){
+			l = P1(x,y);
+			if(l > nlabels){
+				nlabels = l;
+			}
+			labelcount[l]++;
+		}
+	}
+	//
+	// ただし、画像の縁を含むものは除く...
+	//
+	for(y=0;y<height;y++){
+		labelcount[P1(0,y)] = 0;
+		labelcount[P1(width-1,y)] = 0;
+	}
+	for(x=0;x<width;x++){
+		labelcount[P1(x,0)] = 0;
+		labelcount[P1(x,height-1)] = 0;
+	}
+	max = 0;
+	maxlabel = 0;
+	for(i=1;i<=nlabels;i++){ // 領域番号は1から
+		if(labelcount[i] >= max){
+			max = labelcount[i];
+			maxlabel = i;
+		}
+	}
+	for(y=0;y<height;y++){
+		for(x=0;x<width;x++){
+			P2(x,y) = ((P1(x,y) == maxlabel) ? 1 : 0);
+		}
+	}
+	
+	free(labelcount);
+}
+
+void select_label(unsigned long *src, unsigned long *dst, int label)
+{
+	int i;
+	unsigned long color;
+	
+	checkinit();
+	for(i=0;i<width*height;i++){
+		color = *src++;
+		*dst++ = (color == label ? 1 : 0);
+	}
+}
+
+
+

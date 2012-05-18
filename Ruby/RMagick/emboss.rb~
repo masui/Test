@@ -1,0 +1,7 @@
+mages = Image.read("sf2.jpg")
+img2 = images[0].spread(1)
+img3 = img2.median_filter(2)
+img4 = img3.emboss(0, 1)
+img4.write("sample751a.png")
+
+exit

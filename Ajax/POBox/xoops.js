@@ -1,0 +1,32 @@
+テキストエリアのカーソル位置に文字を入力
+
+function xoopsSavePosition(id)
+{
+	var textareaDom = xoopsGetElementById(id);
+	if (textareaDom.createTextRange) {
+		textareaDom.caretPos = document.selection.createRange().duplicate();
+	}
+}
+
+function xoopsInsertText(domobj, text)
+{
+	if (domobj.createTextRange && domobj.caretPos){
+  		var caretPos = domobj.caretPos;
+		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) 
+== ' ' ? text + ' ' : text;  
+	} else if (domobj.getSelection && domobj.caretPos){
+		var caretPos = domobj.caretPos;
+		caretPos.text = caretPos.text.charat(caretPos.text.length - 1)  
+== ' ' ? text + ' ' : text;
+	} else {
+		domobj.value = domobj.value + text;
+  	}
+}
+
+function xoopsCodeSmilie(id, smilieCode) {
+	var revisedMessage;
+	var textareaDom = xoopsGetElementById(id);
+	xoopsInsertText(textareaDom, smilieCode);
+	textareaDom.focus();
+	return;
+}

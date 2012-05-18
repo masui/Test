@@ -1,0 +1,207 @@
+This is pTeX, Version 3.141592-p3.1.10 (sjis) (Web2C 7.5.4) (format=platex 2009.8.28)  24 SEP 2011 11:53
+**floatexm
+(./floatexm.tex
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2003/12/01> patch level 0)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2004/02/16 v1.4f Standard LaTeX document class
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2004/02/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen118
+)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/floatflt/floatflt.sty
+Package: floatflt 1997/07/16 v. 1.31
+\c@OptionTest=\count89
+\figbox=\box41
+\tabbox=\box42
+\pagebox=\box43
+\ffigcount=\count90
+\ftabcount=\count91
+\fftest=\count92
+\hangcount=\count93
+\nosuccesstryfig=\count94
+\nosuccesstrytab=\count95
+\figgutter=\dimen119
+\tabgutter=\dimen120
+\htdone=\dimen121
+\pageht=\dimen122
+\startpageht=\dimen123
+\tabbredd=\dimen124
+\floatfltwidth=\dimen125
+\fltitemwidth=\dimen126
+\outputpretest=\toks15
+) (./floatexm.aux)
+\openout1 = `floatexm.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 28.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 28.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 28.
+
+
+LaTeX Font Warning: Font shape `JT1/mc/m/it' undefined
+(Font)              using `JT1/mc/m/n' instead on input line 41.
+
+
+LaTeX Font Warning: Font shape `JY1/mc/m/it' undefined
+(Font)              using `JY1/mc/m/n' instead on input line 41.
+
+Package floatflt Message: Floating figure 1 set on page 1
+
+Package floatflt Warning: Floating figures 1 and 2 colliding.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
+[]\OT1/cmr/m/n/10.95 Figure 2: The
+ []
+
+
+Underfull \hbox (badness 4647) in paragraph at lines 83--83
+\OT1/cmtt/m/n/10.95 floatingfigure \OT1/cmr/m/n/10.95 en-vi-
+ []
+
+[1
+
+]
+Package floatflt Message: Floating figure 2 set on page 2
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
+[]\OT1/cmr/m/n/10.95 Table 1: The
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
+\OT1/cmtt/m/n/10.95 floatingtable
+ []
+
+
+Underfull \hbox (badness 4819) in paragraph at lines 126--126
+\OT1/cmr/m/n/10.95 en-vi-ron-ment with
+ []
+
+Package floatflt Message: Floating table 1 set on page 2
+
+Package floatflt Warning: Floating tables 1 and 2 colliding.
+
+
+Package floatflt Warning: Floating table 2 and floating figure 2 colliding.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
+[]\OT1/cmr/m/n/10.95 Table 2: The
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
+\OT1/cmtt/m/n/10.95 floatingtable
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
+\OT1/cmr/m/n/10.95 en-vi-ron-ment with
+ []
+
+[2]
+Package floatflt Message: Floating table 2 set on page 3
+
+Package floatflt Warning: Floating figures 2 and 3 colliding.
+
+
+Package floatflt Warning: Floating figure 3 and floating table 2 colliding.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--173
+[]\OT1/cmr/m/n/10.95 Figure 3: The
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--173
+\OT1/cmtt/m/n/10.95 floatingfigure \OT1/cmr/m/n/10.95 en-vi-ron-
+ []
+
+Package floatflt Message: Floating figure 3 set on page 3
+[3]
+
+Package floatflt Warning: Floating figure 4 and floating table 2 colliding.
+
+Package floatflt Message: Floating figure 4 set on page 4
+
+Underfull \hbox (badness 2443) in paragraph at lines 236--266
+\OT1/cmr/m/n/10.95 still. I scarcely
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 236--266
+\OT1/cmr/m/n/10.95 stead-ily I could
+ []
+
+
+Package floatflt Warning: Floating tables 2 and 3 colliding.
+
+
+Package floatflt Warning: Floating table 4 and floating figure 3 colliding.
+
+
+Overfull \hbox (10.78334pt too wide) in paragraph at lines 271--273
+[] [] 
+ []
+
+Package floatflt Message: Floating table 3 set on page 4
+[4]
+Package floatflt Message: Floating table 4 set on page 5
+[5]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 369.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 369.
+ (./floatexm.lof)
+\tf@lof=\write3
+\openout3 = `floatexm.lof'.
+
+ (./floatexm.lot)
+\tf@lot=\write4
+\openout4 = `floatexm.lot'.
+
+ [6] (./floatexm.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 345 strings out of 94681
+ 4014 string characters out of 1174652
+ 58289 words of memory out of 1500000
+ 3690 multiletter control sequences out of 10000+50000
+ 15239 words of font info for 59 fonts, out of 1200000 for 2000
+ 566 hyphenation exceptions out of 8191
+ 22i,9n,19p,236b,247s stack positions out of 5000i,500n,6000p,200000b,5000s
+
+Output written on floatexm.dvi (6 pages, 23360 bytes).

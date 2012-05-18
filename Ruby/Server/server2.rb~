@@ -1,0 +1,30 @@
+# server.rb
+
+require "socket"
+
+gs = TCPserver.open(5678)
+addr = gs.addr
+addr.shift
+printf("server is on %s\n", addr.join(":"))
+
+words = []
+File.open("/usr/lib/words","r"){ |f|
+  words = f.readlines
+}
+
+while true
+  Thread.start(gs.accept) do |s|       # save to dynamic variable
+    print(s, " is accepted\n")
+    while str = s.gets
+      md = /(\d+)\s+(\d+)/.match(str)
+      x = md[0].to_i
+      y = md[1].to_i
+      ind = (x / 5).to_i * 400 + y
+      word = words[ind]
+      word = "" unless word
+      s.write(word + "\000")
+    end
+    print(s, " is gone\n")
+    s.close
+  end
+end

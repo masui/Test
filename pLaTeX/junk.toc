@@ -1,0 +1,4 @@
+\contentsline {chapter}{\numberline {}インタフェースの心理学}{\rensuji {1}}
+\contentsline {section}{\numberline {}情報視覚化}{\rensuji {1}}
+\contentsline {section}{\numberline {}なんとなく、フラクタル}{\rensuji {3}}
+\contentsline {subsection}{\numberline {}ご近所のべき分布}{\rensuji {4}}

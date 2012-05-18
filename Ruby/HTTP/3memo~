@@ -1,0 +1,23 @@
+require 'net/http'
+# Net::HTTP.version_1_2   # おまじない
+#Net::HTTP.start('www.example.com', 80) {|http|
+#  response = http.get('/index.html')
+#  puts response.body
+#}
+
+server = 'portal.acm.org'
+command = '/beta/downformats.cfm?id=1753367&parent_id=1753326&expformat=endnotes'
+
+def get(server,command)
+  body = ''
+  Net::HTTP.start(server, 80) {|http|
+    response = http.get(command)
+    body = response.body
+  }
+  body
+end
+
+puts get(server,command)
+
+server = 'ci.nii.ac.jp'
+command = '/export?fileType=1&docSelect=110002949476'

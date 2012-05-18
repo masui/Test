@@ -1,0 +1,4 @@
+print(typeof aaa);
+
+
+

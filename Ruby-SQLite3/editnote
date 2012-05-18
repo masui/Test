@@ -1,0 +1,23 @@
+# ノートデータベースを修正するスクリプト
+
+require 'sqlite3'
+
+db = SQLite3::Database.new( "/tmp/notes.db" )
+
+# a = db.execute("select * from 'note_bodies' where note_id == 1" )
+
+# a = db.execute("select * from 'note_bodies'" )
+# puts a
+
+db.execute( "delete from 'note_bodies' where note_id == 4")
+db.execute( "insert into 'note_bodies' values ( ?, ? )", "4", '11/10に書いたことは間違っているようだ。<br>FireFoxは漢字コードを自動検出するので問題ないが、Safariは全体的にコードの自働判定がニブいので明示的な指定が必要だということらしい。URLエンコードしておけば大丈夫なんだろう。<br><br>SafariとXMLHttp通信するときは、<ul><li>サーバ側でURI.escape(...)<li>クライアント側で decodeURIComponent()</ul>するのが良いらしい。')
+
+db.execute( "delete from 'note_bodies' where note_id == 5")
+db.execute( "insert into 'note_bodies' values ( ?, ? )", "5", '表示に関するバグらしきものについて:<br>「コード」みたいなテキストがあるとき、何故か「-」のところで改行が入ってしまうことがあるようだ。')
+
+# db.execute( "delete from 'note_bodies' where note_id == 4")
+# db.execute( "insert into 'note_bodies' values ( ?, ? )", "4", 'To do today:<div><br><div>ABCDEFG</div>' )
+
+
+
+

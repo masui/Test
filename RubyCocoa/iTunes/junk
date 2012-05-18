@@ -1,0 +1,22 @@
+p = [
+     'ae',
+     'iouy',
+     'bcdgjkqvxz',
+     'fhlmnrpstw'
+]
+
+
+pat = 'abcdef'
+newpat = ''
+
+pat.split(//).each { |c|
+  p.each { |s|
+    if s.index(c) then
+      newpat += ("[" + s + "]")
+      next
+    end
+  }
+}
+
+puts newpat
+

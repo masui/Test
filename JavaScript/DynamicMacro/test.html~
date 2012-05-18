@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>title</title>
+</head>
+<body>
+
+<textarea id="textarea">
+</textarea>
+
+</body>
+<script type="text/javascript">
+var target = document.getElementById('textarea');
+// EventUtils.sendChar("a",target);
+//__doEventDispatch(target, charCode, keyCode, hasShift);
+//var aChar = "a";
+//var hasShift = false;
+//var charCode = aChar.charCodeAt(0);
+//var keyCode = charCode;
+//dispatchEvent(target, charCode, keyCode, hasShift);
+
+var event = {};
+event.charCode = 96;
+event.keyCode = 96;
+
+// createEvent()は以下参照
+// https://developer.mozilla.org/en/DOM/document.createEvent
+//
+// initKeyEvent()
+// https://developer.mozilla.org/en/DOM/event.initKeyEvent
+// event.initKeyEvent (type, bubbles, cancelable, viewArg, 
+//                        ctrlKeyArg, altKeyArg, shiftKeyArg, metaKeyArg, 
+//                        keyCodeArg, charCodeArg) 
+
+function alt(event){
+  var keyEvent = document.createEvent("KeyboardEvent");
+  keyEvent.initKeyEvent(
+    "keypress",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,
+                      //  Specifies UIEvent.view. This value may be null.
+    false,            //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    event.shiftKey,   //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    event.keyCode,    //  in unsigned long keyCodeArg,
+    event.keyCode);   //  in unsigned long charCodeArg); 
+
+//  keyEvent.initKeyEvent("keypress", true, true, window,
+//    false, false, false, false, event.keyCode, event.keyCode);
+//    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
+//    options.keyCode, options.charCode );
+
+
+  target.dispatchEvent(keyEvent);
+}
+
+var oEvent = document.createEvent("KeyEvents");
+oEvent.initKeyEvent("keypress", true, true, window,
+    false, false, false, false, 65, 65);
+//    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
+//    options.keyCode, options.charCode );
+
+
+target.addEventListener("keydown",alt,true);
+
+
+
+target.dispatchEvent(oEvent);
+
+</script>
+</html>
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Congratulations!"
+    android:textSize="30dp"
+    android:gravity="center_horizontal"
+    />
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Your Record"
+    android:textSize="20dp"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="50dp"
+    />    
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="0"
+    android:textSize="20dp"
+    android:gravity="center_horizontal"
+    android:id="@+id/text_record"
+    />
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Best Record"
+    android:textSize="20dp"
+    android:layout_marginTop="40dp"
+    android:gravity="center_horizontal"
+    />
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="0"
+    android:textSize="20dp"
+    android:gravity="center_horizontal"
+	android:id="@+id/text_bestrecord"
+    />    
+<Button
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Exit Game"
+    android:textSize="15dp"
+    android:layout_marginTop="50dp"
+    android:id="@+id/button_exit"
+    />
+</LinearLayout>

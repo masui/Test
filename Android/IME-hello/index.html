@@ -1,0 +1,200 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AndroidのIME開発</title>
+<link rel="stylesheet" href="ime.css" type="text/css">
+</style>
+</head>
+<body>
+<h1>AndroidのIME開発</h1>
+
+Androidでは独自のIME(テキスト入力システム)を比較的簡単に開発することができます。
+Googleは
+<a href="http://www.techdoctranslator.com/resources/articles/articles-index/creating-input-method">ドキュメント</a>
+や
+<a href="http://developer.android.com/resources/samples/SoftKeyboard/index.html">サンプルプログラム</a>
+を提供していますし、
+IMEについて解説した開発書籍も出版されているのですが、
+まともに動くシステムについて述べられているものがほとんどなので、
+どうしてもある程度大きなシステムになってしまっています。
+<b>IMEを開発するために最小限何が必要か</b>
+について解説してみます。
+
+<h2>HelloIME</h2>
+
+「Hello, World!」という文字列を入力する機能だけをもつIMEを作ってみることにします。
+
+<br>
+AndroidManifest.xml
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.pitecan.helloime"
+      android:versionCode="1"
+      android:versionName="1.0">
+    &lt;application android:label="@string/app_name" android:icon="@drawable/icon">
+        &lt;service android:name="HelloIME"
+                android:permission="android.permission.BIND_INPUT_METHOD">
+            &lt;intent-filter>
+                &lt;action android:name="android.view.InputMethod" />
+            &lt;/intent-filter>
+	    &lt;meta-data android:name="android.view.im" android:resource="@xml/method" />
+        &lt;/service>
+    &lt;/application>
+&lt;/manifest> 
+</pre>
+
+res/xml/method.xml
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;input-method xmlns:android="http://schemas.android.com/apk/res/android" />
+</pre>
+
+res/layout/input.xml
+<pre>
+&lt;com.pitecan.helloime.HelloIMEView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/keyboard"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="80dip"
+        />
+</pre>
+
+src/com/pitecan/helloime/HelloIME.java
+<pre>
+//
+// 「Hello, World!」IME
+//
+package com.pitecan.helloime;
+
+import android.view.View;
+import android.inputmethodservice.InputMethodService;
+
+public class HelloIME extends InputMethodService
+{
+    HelloIMEView helloIMEView;
+
+    @Override public View onCreateInputView() {
+        helloIMEView = (HelloIMEView) getLayoutInflater().inflate(R.layout.input, null);
+        helloIMEView.setIME(this);
+        return helloIMEView;
+    }
+
+    public void input(String s){
+        getCurrentInputConnection().commitText(s,1); // 入力貼り付け
+    }
+}
+</pre>
+
+src/com/pitecan/helloime/HelloIMEView.java
+<pre>
+package com.pitecan.helloime;
+
+import android.view.View;
+import android.view.MotionEvent;
+import android.graphics.Canvas;
+import android.content.Context;
+import android.util.AttributeSet;
+
+public class HelloIMEView extends View {
+    HelloIME helloIME;
+
+    public HelloIMEView(Context context, AttributeSet attrs) {
+	super(context,attrs);
+    }
+    
+    @Override public void onDraw(Canvas canvas) {
+	canvas.drawColor(0xffe0e0e0);
+    }
+    
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	setMeasuredDimension(widthMeasureSpec,80);
+    }
+    
+    public boolean onTouchEvent(MotionEvent ev) {
+	if((ev.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
+	    helloIME.input("Hello, World! ");
+	}
+	return true;
+    }
+
+    public void setIME(HelloIME _helloIME){
+	helloIME = _helloIME;
+    }
+}
+</pre>
+
+
+iPhoneのSafariでは
+<a href="http://pitecan.com/iPhoneSamples/clock/sample1.html">このページ</a>
+は以下のように表示されます。
+
+<blockquote>
+<img src="http://gyazo.com/c621231a83e38c728e5680a10e6a4ac5.png">
+</blockquote>
+
+このままでは時計になりませんが、
+1秒ごとに時刻を更新する以下のようなJavaScriptプログラムを
+上記のHTMLの最後に加えることにより、
+<a href="clock.html">このページ</a>のように時計として動作するようになります。
+
+<pre>
+&lt;script type="text/javascript">
+Number.prototype.fillzero = function(n){
+  var s = "00000000000"+ this;
+  var len = s.length;
+  return s.slice(len-n,len);
+}
+var refresh = function(){
+  date = new Date;
+  document.getElementById('hour').innerHTML = date.getHours().fillzero(2);
+  document.getElementById('min').innerHTML = date.getMinutes().fillzero(2);
+}
+setInterval(refresh,1000);
+&lt;/script>
+</pre>
+
+<blockquote>
+<img src="http://gyazo.com/771cf59c18b9c7ac608ccfa1b25f454b.png">
+</blockquote>
+
+<b>これで開発は終了です!</b>
+PhoneGapを利用してこのHTMLファイルをiPhoneアプリケーションに変換すれば、
+Objective-Cを利用して開発したアプリケーションと全く同じように、
+iPhoneにダウンロードしたりAppStoreで販売したりすることができます。
+
+<p>
+<b>HTMLとJavaScriptをあわせて30行しかプログラムを書いていないにもかかわらず、
+ちゃんと時計として動作するiPhoneアプリケーションが書けてしまいました。</b>
+HTMLやJavaScriptの知識さえあれば、
+超簡単にiPhoneアプリケーションを作成できることがわかります。
+
+<p>
+もっと格好良いアプリケーションの作りかた、
+<a href="http://www.phonegap.com/">PhoneGap</a>の詳しい使いかた、
+AppStoreへの登録法の詳細など、
+JavaScriptを使ってiPhoneアプリケーションを作るための情報のすべてが
+<a href="http://www.amazon.co.jp/dp/4873114616">iPhoneアプリケーション開発ガイド</a>
+という本にまとめられています。
+ぜひ読んでみて下さい!
+(<code>meta</code>タグ中のiPhone用のオマジナイの解説もあります)
+
+<blockquote>
+<a href="http://www.amazon.co.jp/dp/4873114616"><img src="http://ec2.images-amazon.com/images/I/51qb8cLjHyL._SL500_AA300_.jpg" border='none'></a>
+</blockquote>
+<p>
+
+
+<p>
+<hr>
+2010 8/13 <a href="http://pitecan.com/">増井俊之</a>
+
+
+
+
+
+</body>
+</html>
+
+

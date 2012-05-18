@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Steinertree Module" default="compile" basedir=".">
+  <description>Steinertree Module</description>
+
+  <property file="${user.home}/.ant.properties"/>
+ <!-- example for ~/.ant.properties
+flex2.home=/usr/share/lib/java/flex2sdk
+ -->
+  <property name="app.name" value="steinertree"/>
+  <property name="spec.file" value="Steinertree.as"/>
+  <property name="src" location="src"/>
+  <property name="work" location="work"/>
+
+  <target name="clean">
+    <delete dir="${work}"/>
+  </target>
+
+  <target name="init">
+    <mkdir dir="${work}"/>
+  </target>
+
+  <!--  -->
+
+  <target name="prepare">
+    <uptodate property="build.done" targetfile="${work}\${app.name}.swf">
+      <srcfiles dir="${src}">
+        <include name="**/*.as"/>
+        <include name="**/*.mxml"/>
+      </srcfiles>
+    </uptodate>
+  </target>
+
+  <target name="compile" depends="init,prepare" unless="build.done">
+    <java classname="flex2.tools.Compiler" classpath="${flex2.home}/lib/mxmlc.jar" fork="true">
+      <jvmarg value="-Dapplication.home=${flex2.home}"/>
+      <jvmarg value="-Xmx384m"/>
+      <jvmarg value="-Dsun.io.useCanonCaches=false"/>
+
+      <arg value="-output=${work}/${app.name}.swf"/>
+      <!--arg value="-default-size=500,530"/-->
+      <!--arg value="-default-frame-rate=30"/-->
+      <!--arg value="-default-background-color=0xFFFFFF"/-->
+      <arg value="-verbose-stacktraces=false"/>
+      <arg value="-file-specs=${src}/${spec.file}"/>
+    </java>
+  </target>
+
+  <target name="run" depends="compile">
+    <exec executable="${flex2.home}/player/debug/SAFlashPlayer.exe">
+      <arg value="${work}/${app.name}.swf"/>
+    </exec>
+  </target>
+
+  <target name="install" depends="compile">
+    <copy file="${work}/${app.name}.swf" todir="${flash.install.dir}"/>
+  </target>
+
+  <!--  -->
+
+  <target name="zip" depends="init">
+    <zip zipfile="${work}/${app.name}-src.zip">
+      <zipfileset dir="." excludes="**/work/**" prefix="${app.name}"/>
+    </zip>
+  </target>
+
+  <target name="backup" depends="zip">
+    <copy file="${work}/${app.name}-src.zip" todir="${flash.backup.dir}"/>
+  </target>
+
+  <!--  -->
+
+</project>

@@ -1,0 +1,14 @@
+require "mysql"
+
+my = Mysql::new("localhost", "hondana", "", "hondana")
+res = my.query("select * from book")
+res.each do |row|
+  col1 = row[0]
+  col2 = row[1]
+  puts col1
+  puts col2
+  exit
+end
+
+
+

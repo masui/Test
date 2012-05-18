@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/label_keyboad_setting"
+        android:key="sample_ime_settings">
+
+        <CheckBoxPreference
+            android:key="show_suggestions"
+            android:title="@string/show_suggestions"
+            android:persistent="true"
+            android:defaultValue="true"
+            />
+</PreferenceScreen>

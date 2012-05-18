@@ -1,0 +1,1 @@
+curl 'http://developer.android.com/sdk/download.html?v=android-sdk_r06-mac_86.zip' > junk.zip

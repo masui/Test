@@ -1,0 +1,22 @@
+require 'sdbm'
+
+dbm = SDBM.new('/tmp/dbm',0666)
+a = []
+a[0] = [1,2,3]
+a[1] = "abcdefg"
+a[2] = 33333
+dbm['0'] = Marshal.dump(a[0])
+dbm['1'] = Marshal.dump(a[1])
+dbm['2'] = Marshal.dump(a[2])
+
+a = []
+begin
+  b = a[0][1]
+rescue
+  a[0] = Marshal.load(dbm['0'])
+  b = a[0][1]
+end
+
+puts b
+
+

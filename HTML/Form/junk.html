@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>title</title>
+<!-- <link rel="stylesheet" href="layout.css" type="text/css" media="all" charset="utf-8" /> -->
+<style type="text/css">
+
+form p { position:relative }
+label  { position:absolute; top:0; left:0}
+form p br {display: none;}
+
+</style>
+
+<script language="JavaScript" src="jquery.js"></script>
+<!-- <script language="JavaScript" src="jquery.infieldlabel.js"></script> -->
+<script src="jquery.infieldlabel.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function(){
+  $("label").inFieldLabels();
+  $("input").attr("autocomplete","off");
+});
+</script>
+</head>
+<body>
+
+<form action="index.html" method="get" accept-charset="utf-8">
+<p>
+  <label for="field_id">Label Text</label><br />
+  <input type="text" name="field_id" value="" id="field_id">
+</p>
+</form>
+
+</body>
+</html>
+
+

@@ -1,0 +1,19 @@
+
+positions = []
+File.open("db"){ |f|
+  positions = Marshal.load(f)
+}
+
+(1..4).each { |i|
+  if positions[i].nil? then
+    positions[i] = [0,0]
+  end
+}
+
+puts positions[1]
+puts positions[2]
+puts positions[3]
+puts positions[4]
+
+
+

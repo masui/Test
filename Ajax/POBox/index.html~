@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+</head>
+<body>
+
+<span id="text">text</span>
+<p>
+<span id="cand">text</span>
+
+<script type="text/javascript">
+
+function getXmlHttpObject() {
+    var xmlhttp;
+    /*@cc_on
+    @if (@_jscript_version >= 5)
+        try {
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xmlhttp = false;
+            }
+        }
+    @else
+        xmlhttp = false;
+    @end @*/
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        try {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.overrideMimeType("text/xml"); 
+        } catch (e) {
+            xmlhttp = false;
+        }
+    }
+    return xmlhttp;
+}
+
+xmlhttp = getXmlHttpObject();
+
+document.onkeypress = keypress;
+
+function keypress(event)
+{
+  t = document.getElementById("text");
+  var i = keycode(event);
+
+  text = t.innerHTML;
+  if(i == 0x08 || i == 0x7f || i == 0x42){
+    text = text.substring(0,text.length-1);
+  }
+  else {
+    text = text + String.fromCharCode(i);
+  }
+  t.innerHTML = text;
+
+  pobox(text);
+
+  return false;  // こうするとブラウザ割当のショートカットが無視されるらしい
+                 // http://www.keynavi.net/ja/tipsj/kfunc.html
+}
+
+function keycode(event)
+{
+  if(navigator.appName.indexOf("Microsoft") != -1){
+    return window.event.keyCode;
+  }
+  if(navigator.appName.indexOf("Netscape") != -1)
+    return event.which;
+}
+
+function pobox(text){
+  querytext = text;
+  xmlhttp.open("GET", "pobox.cgi?q="+escape(querytext),true);
+  xmlhttp.onreadystatechange = pobox_result;
+  xmlhttp.send(null);
+}
+
+function pobox_result() {
+  p = document.getElementById("cand");
+  if (xmlhttp.readyState==4) {
+    ret = xmlhttp.responseText;
+    p.innerHTML = ret;
+  }
+}
+
+</script>
+
+
+
+</body>
+</html>

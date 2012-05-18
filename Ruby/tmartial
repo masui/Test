@@ -1,0 +1,10 @@
+require '/home/masui/lib/ruby/tmarshal'
+
+File.open("aaa", "w"){ |f|
+  db = {}
+  db['Tite'] = 'Title Title'
+  db['Comment'] = 'コメントコメント'
+  f.puts TMarshal.dump(db)
+}
+
+

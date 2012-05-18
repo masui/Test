@@ -1,0 +1,5 @@
+while true do
+  puts Time.now
+  STDOUT.flush
+  sleep 1
+end

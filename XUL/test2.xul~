@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/"?>
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<label value="水平配置"/>
+<hbox>
+<button label="horizontal1"/>
+<button label="horizontal2"/>
+</hbox>
+
+</window>

@@ -1,0 +1,19 @@
+require 'debug-socket'
+
+require 'iconvfix'
+
+require "xmlrpc/client"
+
+server = XMLRPC::Client.new("www.hondana.org", "/api", 80)
+ok, param = server.call2("hondana.books","yuco")
+if ok then
+  param.each { |p|
+    puts p.u8toeuc
+  }
+else
+  puts "Error:"
+  puts param.faultCode
+  puts param.faultString
+end
+
+

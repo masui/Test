@@ -1,0 +1,9 @@
+a
+b
+c
+INSERT after C
+d
+INSERT after D
+DELETE e
+f
+g

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/"?>
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<hbox>
+<label value="label1" flex="1" style="border: 1px solid;"/>
+<label value="label2" flex="2" style="border: 1px solid;"/>
+</hbox>
+
+<button label="Button" style="min-width: 10em;"/>
+
+</window>

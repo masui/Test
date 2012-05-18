@@ -1,0 +1,11 @@
+require "xmlrpc/client"
+
+server = XMLRPC::Client.new("b.hatena.ne.jp", "/xmlrpc", 80)
+ok, param = server.call2("bookmark.getCount","http://d.hatena.ne.jp/", "http://d.hatena.ne.jp/asin/4106100037")
+
+param.each { |key,val|
+  puts key
+  puts val
+}
+
+

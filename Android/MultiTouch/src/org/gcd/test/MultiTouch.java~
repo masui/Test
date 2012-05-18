@@ -1,0 +1,100 @@
+// http://www.gcd.org/blog/2010/07/613/
+
+package org.gcd.test;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.SurfaceView;
+import android.view.SurfaceHolder;
+import android.view.MotionEvent;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Color;
+import java.util.Hashtable;
+import java.util.Set;
+import java.util.Iterator;
+
+public class MultiTouch extends Activity {
+    private TestView view;
+    final int Pitch = 30;
+
+    class TouchPoint {
+	public float x;
+	public float y;
+	public float p;
+    }
+    Hashtable<Integer, TouchPoint> points;
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+	view = new TestView(this);
+	points = new Hashtable<Integer, TouchPoint>();
+	setContentView(view);
+    }
+
+    class TestView extends SurfaceView {
+	public TestView(Context context) {
+	    super(context);
+	}
+
+	@Override
+	public void onDraw(Canvas canvas) {
+	    canvas.drawColor(Color.WHITE);
+	    Paint paint = new Paint();
+	    Set keys = points.keySet();
+	    for (Iterator i = keys.iterator(); i.hasNext();) {
+		Integer id = (Integer)i.next();
+		switch (id) {
+		case 0:  paint.setColor(Color.RED);   break;
+		case 1:  paint.setColor(Color.GREEN); break;
+		case 2:  paint.setColor(Color.BLUE);  break;
+		default: paint.setColor(Color.BLACK); break;
+		}
+		paint.setAlpha(128);
+		TouchPoint p = points.get(id);
+		canvas.drawCircle(p.x, p.y, 10+p.p*200, paint);
+	    }
+	}
+
+	void put_points(MotionEvent ev) {
+	    int count = ev.getPointerCount();
+	    for (int i=0; i < count; i++) {
+		int id = ev.getPointerId(i);
+		TouchPoint p = new TouchPoint();
+		p.x = ev.getX(i);
+		p.y = ev.getY(i);
+		p.p = ev.getPressure(i);
+		points.put(id, p);
+	    }
+	}
+
+	public boolean onTouchEvent(MotionEvent ev) {
+	    int action = ev.getAction();
+	    switch (action & MotionEvent.ACTION_MASK) {
+	    case MotionEvent.ACTION_DOWN:
+	    case MotionEvent.ACTION_POINTER_DOWN:
+	    case MotionEvent.ACTION_MOVE:
+		put_points(ev);
+		break;
+	    case MotionEvent.ACTION_UP:
+		points.remove(ev.getPointerId(0));
+		break;
+	    case MotionEvent.ACTION_POINTER_UP:
+		put_points(ev);
+		int index = (action & MotionEvent.ACTION_POINTER_INDEX_MASK)
+		    >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+		points.remove(ev.getPointerId(index));
+		break;
+	    }
+	    Canvas canvas = getHolder().lockCanvas();
+	    if (canvas != null) {
+		onDraw(canvas);
+		getHolder().unlockCanvasAndPost(canvas);
+	    }
+	    return true;
+	}
+    }
+}

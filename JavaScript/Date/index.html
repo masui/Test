@@ -1,0 +1,126 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>JavaScriptでiPhoneアプリを楽々作成</title>
+<link rel="stylesheet" href="iphone.css" type="text/css">
+</style>
+</head>
+<body>
+<h1>JavaScriptでiPhoneアプリを楽々作成</h1>
+
+iPhoneアプリを作るためには以下のようなプログラミングの知識が必要だと思われています。
+
+<ul>
+<li>Objective-Cの知識 (Cの知識 + オブジェクト指向プログラミングの知識)
+<li>iPhoneのライブラリの知識
+</ul>
+
+これらをマスターするのはかなり大変ですが、
+「<a href="http://www.phonegap.com/">PhoneGap</a>」というシステムを利用すると、
+<b>JavaScriptだけを使って簡単にアプリを作成することができます。</b>
+
+<p>
+iPhoneのSafariから
+JavaScriptが動くWebページにアクセスするとiPhone上でJavaScriptプログラムを動かすことができます。
+このような「Webアプリケーション」はSafariの上でしか動作しませんし、
+ネットに接続されていない状態では利用できません。
+しかし<a href="http://www.phonegap.com/">PhoneGap</a>を利用すると、
+JavaScriptプログラムとSafariをまとめてひとつのアプリケーションを生成することができるので、
+<b>ネットが接続されていない環境で動作するiPhoneアプリケーションを</b>
+<b>JavaScriptだけで</b>
+作成することができます。
+
+<h2>JavaScriptによるアプリケーション作成例</h2>
+
+iPhone上で動作する時計アプリケーションを作ってみることにしましょう。
+まず、表示したい画面をHTMLで記述します。
+
+<pre>
+&lt;html>
+&lt;head>
+&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+&lt;meta name="viewport" content="width=device-width, minimum-scale=1.0,
+maximum-scale=1.0, user-scalable=no" />
+&lt;meta name="apple-mobile-web-app-capable" content="yes" /> 
+&lt;title>時計&lt;/title>
+&lt;/head>
+&lt;body style="background-color:#eee;">
+&lt;div style="font-size:60pt;font-family:sans-serif;text-align:center;">
+&lt;span id="hour">00&lt;/span>:&lt;span id="min">00&lt;/span>
+&lt;/div>
+&lt;/body>
+&lt;/html>
+</pre>
+
+iPhoneのSafariでは
+<a href="http://pitecan.com/iPhoneSamples/clock/sample1.html">このページ</a>
+は以下のように表示されます。
+
+<blockquote>
+<img src="http://gyazo.com/c621231a83e38c728e5680a10e6a4ac5.png">
+</blockquote>
+
+このままでは時計になりませんが、
+1秒ごとに時刻を更新する以下のようなJavaScriptプログラムを
+上記のHTMLの最後に加えることにより、
+<a href="clock.html">このページ</a>のように時計として動作するようになります。
+
+<pre>
+&lt;script type="text/javascript">
+Number.prototype.fillzero = function(n){
+  var s = "00000000000"+ this;
+  var len = s.length;
+  return s.slice(len-n,len);
+}
+var refresh = function(){
+  date = new Date;
+  document.getElementById('hour').innerHTML = date.getHours().fillzero(2);
+  document.getElementById('min').innerHTML = date.getMinutes().fillzero(2);
+}
+setInterval(refresh,1000);
+&lt;/script>
+</pre>
+
+<blockquote>
+<img src="http://gyazo.com/771cf59c18b9c7ac608ccfa1b25f454b.png">
+</blockquote>
+
+<b>これで開発は終了です!</b>
+PhoneGapを利用してこのHTMLファイルをiPhoneアプリケーションに変換すれば、
+Objective-Cを利用して開発したアプリケーションと全く同じように、
+iPhoneにダウンロードしたりAppStoreで販売したりすることができます。
+
+<p>
+<b>HTMLとJavaScriptをあわせて30行しかプログラムを書いていないにもかかわらず、
+ちゃんと時計として動作するiPhoneアプリケーションが書けてしまいました。</b>
+HTMLやJavaScriptの知識さえあれば、
+超簡単にiPhoneアプリケーションを作成できることがわかります。
+
+<p>
+もっと格好良いアプリケーションの作りかた、
+<a href="http://www.phonegap.com/">PhoneGap</a>の詳しい使いかた、
+AppStoreへの登録法の詳細など、
+JavaScriptを使ってiPhoneアプリケーションを作るための情報のすべてが
+<a href="http://www.amazon.co.jp/dp/4873114616">iPhoneアプリケーション開発ガイド</a>
+という本にまとめられています。
+ぜひ読んでみて下さい!
+(<code>meta</code>タグ中のiPhone用のオマジナイの解説もあります)
+
+<blockquote>
+<a href="http://www.amazon.co.jp/dp/4873114616"><img src="http://ec2.images-amazon.com/images/I/51qb8cLjHyL._SL500_AA300_.jpg" border='none'></a>
+</blockquote>
+<p>
+
+
+<p>
+<hr>
+2010 8/13 <a href="http://pitecan.com/">増井俊之</a>
+
+
+
+
+
+</body>
+</html>
+
+

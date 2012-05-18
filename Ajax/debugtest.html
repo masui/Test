@@ -1,0 +1,97 @@
+<html>
+<head>
+<script language="JavaScript" src="debug.js"></script>
+</head>
+<body>
+
+<img id="junk" src="junk.gif">
+
+<script type="text/javascript">
+// print(variable): variableの内容を出力バッファに保存
+// flush(): 出力バッファの内容をデバッグウィンドウに出力
+// clear(): 出力バッファの内容をクリア
+// setDebug(true | false): デバッグ情報を出力する(true)か出力しない(false)かを設定
+// inspect(obj): オブジェクトの内容をわかりやすい文字列にする
+// p(obj): inspectした結果を表示する
+
+
+var a = 100;
+var b = "abcdefg";
+debug.setDebug(true);
+
+//debug.clear();
+//debug.p(b);
+//debug.p(b);
+//debug.inspect(a);
+//debug.refresh();
+///debug.p(a);
+
+function getMouseX(e){
+  if(window.opera)                            //o6!)
+      return e.clientX
+  else if(document.all && document.getElementById && (document.compatMode=='CSS1Compat')) // e6
+      return document.documentElement.scrollLeft+event.clientX
+  else if(document.all){                       //e4,e5
+      return document.body.scrollLeft+event.clientX
+  }else if(document.layers||document.getElementById)
+      return e.pageX                          //n4,n6,m1!)
+}
+
+function getMouseY(e){
+  if(window.opera)                            //o6!)
+      return e.clientY
+  else if(document.all && document.getElementById && (document.compatMode=='CSS1Compat')) // e6
+      return document.documentElement.scrollTop+event.clientY
+  else if(document.all)                       //e4,e5,e6!)
+      return document.body.scrollTop+event.clientY
+  else if(document.layers||document.getElementById)
+      return e.pageY                          //n4,n6,m1!)
+}
+
+var img = document.getElementById("junk");
+//debug.p(img);
+//img.align = "right";
+//img.setAttribute('align','right');
+
+img.style.position = 'absolute'
+img.style.top = '100px'
+img.style.left = '100px'
+
+//document.onmousemove = mmove
+document.onmouseup = mmove
+
+document.write('abcdefg');
+
+xmlhttp = new XMLHttpRequest();
+
+var xx = 0
+
+function mmove(e) {
+  y = getMouseY(e)
+  x = getMouseX(e)
+
+  xmlhttp.open("GET", "test.cgi?x=" + x,true);
+xmlhttp.onreadystatechange=function() {
+ if (xmlhttp.readyState==4) {
+//  alert(xmlhttp.responseText)
+    xx = xmlhttp.responseText
+  img.style.top = y
+  img.style.left = xx
+ }
+}
+
+  xmlhttp.send(null)
+}
+
+//xmlhttp.open("GET", "test.cgi",true);
+//xmlhttp.onreadystatechange=function() {
+// if (xmlhttp.readyState==4) {
+////  alert(xmlhttp.responseText)
+// }
+//}
+//xmlhttp.send(null)
+
+</script>
+
+</body>
+</html>

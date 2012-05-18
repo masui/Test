@@ -1,0 +1,81 @@
+/*
+	WikiBBSのスタイルファイル
+*/
+body {
+	background-color: #ffffe0;
+	color: #000;
+}
+
+h1 {	/* タイトル */
+	background-color: #ffffa0;
+	text-decoration: none;
+	margin:0;
+	padding:10 10 20 10;
+	border-style:solid;
+	border-width:1 1 1 10;
+	border-color:#a0a000;
+}
+
+h1 span.menu { /* タイトル右下の編集メニュー */
+	font-size:12;
+	float:right;
+	color: #ff0000;
+	text-decoration: none;
+}
+
+span.link {
+	color:darkgreen;
+	background-color: #ffffd0;
+	border-style: none;
+	padding: 10pt;
+	filter: Alpha(opacity=30); /*IE*/
+/*	-moz-opacity:0.30; /*FF*/
+	opacity:0.30;
+}
+
+a:linksave {
+	color:darkgreen;
+/*	background-color: transparent; */
+	background-color: #ffffb0;
+	border-color: #ffffb0;
+	border-style: solid;
+	border-width: 2;
+	text-decoration: none;
+	padding: 1pt;
+	filter:alpha(opacity=30); /*IE*/
+	-moz-opacity:0.30; /*FF*/
+	opacity:0.30;
+}
+
+a:link {
+	color:darkgreen;
+/*	background-color: transparent; */
+	text-decoration: none;
+}
+
+a:visitedsave {
+	color:#004000;
+/*	background-color: transparent; */
+	background-color: #ffffd0;
+	border-color: #ffffd0;
+	border-style: solid;
+	border-width: 2;
+	text-decoration: none;
+	padding: 1pt;
+	filter:alpha(opacity=30); /*IE*/
+	-moz-opacity:0.30; /*FF*/
+	opacity:0.30;
+}
+
+a:visited {
+	color:blue;
+	border-style: none;
+	text-decoration: none;
+	filter:Alpha(opacity=99); /*IE*/
+/*	-moz-opacity:0.99; /*FF*/
+	opacity:0.70;
+}
+
+
+
+

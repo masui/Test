@@ -1,0 +1,440 @@
+<html>
+<head>
+<title>POBox @ Ajax</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<BASE href="http://pitecan.com/POBox/">
+<script language="JavaScript" src="debug.js"></script>
+<style type="text/css">
+body {
+	background-color: #ffffc0;
+}
+h1 {
+	font-size: 20;
+	padding: 10;
+	background-color: #80ffff;
+	border-style: none;
+	border-width: 0;
+//	border-style: solid;
+}
+span.cursor {
+	background-color: yellow;
+	color: yellow;
+}
+
+.sel { 
+	background-color: yellow;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Ajax版POBox</h1>
+
+<ul>
+<li> サーバのPOBoxを使って漢字入力できます。
+<li> <a href="http://pitecan.com/OpenPOBox/server/index.html">POBox Server</a>と通信する
+<a href="browse.cgi?file=pobox.cgi">pobox.cgi</a>を利用しています。
+<li> Ctrl-Jまたはバッククオート(`)で
+<span style="background-color:#ffffff;border-style:inset;border-width:1;padding:2;margin:2;">直接入力モード</span>と
+<span style="background-color:#ffff7c;border-style:inset;border-width:1;padding:2;margin:2;">POBoxモード</span>がトグルします。
+<li> <a href="http://pitecan.com/DynamicMacro/">Dynamic Macro</a>とかも実装すればEmacsはもう要らない?
+<li> Migemoも動くようにすると便利かも。
+<li> 動きがちょっとタルいので、候補選択/確定前にひと呼吸必要です。
+</ul>
+
+<p>
+<form>
+<textarea STYLE=FONT-SIZE:16pt name="text"id="text" wrap='virtual' rows='5' cols='50' align='top'>Ajax版POBox!</textarea>
+</form>
+
+<p>
+<font size=-1>
+$Date: 2005-03-22 18:23:18 +0900 (Tue, 22 Mar 2005) $ $Rev: 634 $
+</font>
+
+<span id="curstr"></span>
+<p>
+
+<!--
+<span id="pretext">text</span><span id="curstr"></span><span id="cursor" class="cursor">M</span>
+<span id="posttext">text</span>
+-->
+<p>
+<span id="retcode"></span>
+<p>
+
+<div id="cand" style="position:absolute;idth:0;height:0;border-width:2;border-style:inset;visibility:hidden;">
+<span id="cand0" onClick="select_cand(0);"></span>&nbsp;
+<span id="cand1" onClick="select_cand(1);"></span>&nbsp;
+<span id="cand2" onClick="select_cand(2);"></span>&nbsp;
+<span id="cand3" onClick="select_cand(3);"></span>&nbsp;
+<span id="cand4" onClick="select_cand(4);"></span>&nbsp;
+<span id="cand5" onClick="select_cand(5);"></span>&nbsp;
+<span id="cand6" onClick="select_cand(6);"></span>&nbsp;
+<span id="cand7" onClick="select_cand(7);"></span>&nbsp;
+<span id="cand8" onClick="select_cand(8);"></span>&nbsp;
+<span id="cand9" onClick="select_cand(9);"></span>&nbsp;
+<span id="cand10" onClick="select_cand(10);"></span>&nbsp;
+<span id="cand11" onClick="select_cand(11);"></span>&nbsp;
+<span id="cand12" onClick="select_cand(12);"></span>&nbsp;
+<span id="cand13" onClick="select_cand(13);"></span>&nbsp;
+<span id="cand14" onClick="select_cand(14);"></span>&nbsp;
+<span id="cand15" onClick="select_cand(15);"></span>&nbsp;
+<span id="cand16" onClick="select_cand(16);"></span>&nbsp;
+<span id="cand17" onClick="select_cand(17);"></span>&nbsp;
+<span id="cand18" onClick="select_cand(18);"></span>&nbsp;
+<span id="cand19" onClick="select_cand(19);"></span>&nbsp;
+</div>
+
+<script type="text/javascript">
+
+var pobox_mode = false;      // 無変換
+var pobox_pat = "";          // 検索パタン
+var pobox_cands = [];        // サーバから得た候補リスト
+var pobox_nth_cand = 0;      // いくつめの候補を選んでいるか
+var pobox_curstr = "";
+var pobox_exact = false;     // 完全一致でない→ 曖昧検索
+
+// xmlhttp = getXmlHttpObject(); 	// サーバー接続
+
+document.onkeypress = keypress;	// キー入力待ち 開始 BS は来ない
+document.onkeydown = keydown;	// BS キー入力待ち 開始
+// ■ 以上
+
+function getXmlHttpObject() { // サーバー接続を作る
+    var xmlhttp;
+    /*@cc_on
+    @if (@_jscript_version >= 5)
+        try {
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xmlhttp = false;
+            }
+        }
+    @else
+        xmlhttp = false;
+    @end @*/
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        try {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.overrideMimeType("text/xml"); 
+        } catch (e) {
+            xmlhttp = false;
+        }
+    }
+    return xmlhttp;
+}
+
+function keycode(event)
+{ // 入力文字コード
+  if(navigator.appName.indexOf("Microsoft") != -1){
+//alert( window.event.keyCode);
+    return window.event.keyCode; 
+  }
+  if(navigator.appName.indexOf("Netscape") != -1){
+    return event.which;
+  }
+}
+
+//*
+function keydown(event)
+{ // BS を textarea の前に 取得
+var i = keycode(event); // 入力コード
+if(i == 0x08 || i == 0x7f || i == 0x42){
+//alert( '4=' + window.event.keyCode);
+    pobox_backspace();
+    return false;
+}
+    return true; // textarea - keypress に行く？
+}
+//*/
+
+function keypress(event)
+{
+  var i = keycode(event); // 入力コード
+//alert( '5=' + window.event.keyCode);
+
+// BS が textarea に食べられる、取得できてない。
+// -------------		 変換モード切替
+  // if(i == 0x6c){ // 'l'
+  if(i == 10 || i == 96){ // Ctrl-j で出るコード? (IE では Ctrl+Enter も)
+    pobox_mode = !pobox_mode; // 変換モード
+
+    var ta = document.getElementById("text");
+    ta.style.backgroundColor = (pobox_mode ? '#ffff7c' : '#ffffff'); // モード着色
+
+    var cand = document.getElementById("cand");
+    if(pobox_mode){ // 候補窓 を 開く
+      cand.style.backgroundColor = 'white';
+      cand.style.width = ta.offsetWidth;
+      cand.style.height = 40;
+      cand.style.left = ta.offsetLeft;
+      cand.style.top = ta.offsetTop + ta.offsetHeight;
+      cand.style.visibility = '';
+    }
+    else { // 候補窓 を 閉じる
+      cand.style.visibility = 'hidden';
+    }
+
+    pobox_clear();
+    return false;
+  }
+
+  if(pobox_mode){  // -------------		 変換モード
+    if(i == 0x20){
+      pobox_space(); // 次候補
+    }
+    else if(i == 0x08 || i == 0x7f || i == 0x42){
+//alert( '1===');
+      return pobox_backspace(); // 前候補
+    }
+    else if(i == 0x0d){ // 改行
+      return pobox_return(); // 単漢字？ ポク
+    }
+    else if(i >= 0x31 && i < 0x3a){
+     // pobox_keyin(i); // 番号選択 Ctrl+N ではない
+  pobox_nth_cand = i - 0x30;
+  pobox_set_curstr(pobox_cands[pobox_nth_cand]); // POP 候補語
+  pobox_nth_cand += 1;
+  pobox_disp_cand_list(); // シフト候補リスト
+    }
+    else if(i >= 0x20 && i < 0x7f){
+      pobox_keyin(i); // ローマ字追加 （図形文字）
+    }
+    else { // 通り抜け
+      return true;
+    }
+    return false;
+  }
+  else {  // -------------		 無変換モード
+    return true;
+  }
+}
+// =====================  
+
+function pobox_return(){
+  if(pobox_pat.length == 0){ // 未入力状態
+    return true;
+  }
+  else { // 入力アリ、候補選択、無し 状態
+    if(pobox_exact == false && pobox_nth_cand == 0){ 
+      pobox_exact = true; // 単漢字？ ポイ
+      pobox_search();
+      pobox_disp_cand_list();
+    }
+    else {
+      pobox_fix(); // 変換確定
+    }
+    return false;
+  }
+}
+
+function pobox_keyin(i){ // 普通の文字を入力した場合
+  if(pobox_nth_cand > 0){ // 候補選択アリ状態 → 確定、次文節
+    pobox_fix();
+    pobox_clear();
+  }
+  pobox_pat = pobox_pat + String.fromCharCode(i); // 未確定文字 ＋
+  pobox_do_search();
+}
+
+function pobox_backspace(){
+  if(pobox_pat.length == 0){  // 未入力状態
+    pobox_clear();
+    return true;
+  }
+  if(pobox_nth_cand == 0){ // 入力アリ、候補選択、無し 状態
+    pobox_pat = pobox_pat.substring(0,pobox_pat.length-1); // 短縮
+//alert( '2==' + keycode(event));
+//alert( pobox_pat);
+    pobox_do_search(); // 再辞書引き
+  }
+  else {
+    pobox_nth_cand -= 1; // 前候補
+    if(pobox_nth_cand == 0){
+      pobox_set_curstr(pobox_pat); // 未候補選択 状態まで巻き戻し
+    }
+    else { 
+      pobox_set_curstr(pobox_cands[pobox_nth_cand]); // モデル 更新
+    }
+    pobox_disp_cand_list(); // ビュー 更新
+  }
+  return false;
+}
+
+function pobox_do_search(){ 
+  pobox_set_curstr(pobox_pat); // ローマ字
+  pobox_search(); // 辞書検索
+  pobox_nth_cand = 0; 
+  pobox_disp_cand_list(); // 候補表示
+}
+
+function pobox_space(){ // 次候補
+  pobox_set_curstr(pobox_cands[pobox_nth_cand]); // POP 候補語
+  pobox_nth_cand += 1;
+  pobox_disp_cand_list(); // シフト候補リスト
+}
+
+function pobox_set_curstr(text){ // 選択 文字列 表示更新
+  textwin = document.getElementById("text");
+
+  if(pobox_curstr != ""){
+    len = pobox_curstr.length + 2;
+    delete_text(textwin,len);
+  }
+
+  var instext = (text == "" ? "" : "[" + text + "]");
+
+  pobox_curstr = text;
+
+  insert_text(textwin,instext);
+}
+
+function pobox_fix(){ // 変換確定
+  var t = document.getElementById("text");
+  var s = pobox_curstr;
+  pobox_set_curstr("");
+  insert_text(t,s);
+  pobox_clear();
+}
+
+function pobox_search(){
+  xmlhttp = getXmlHttpObject(); // サーバー接続は、毎回作成することにする。
+
+  q = (pobox_exact ? pobox_pat : pobox_pat + " ");
+
+  xmlhttp.open("GET", "pobox.cgi?q="+escape(q),true);
+  xmlhttp.onreadystatechange = pobox_result;
+  xmlhttp.send(null);
+}
+
+function pobox_result() { // ＝＝＝＝ 未使用 ？
+  if (xmlhttp.readyState==4) {
+    ret = xmlhttp.responseText;
+    pobox_cands = ret.split("\t");
+    pobox_cands.shift();
+    pobox_disp_cand_list();
+  }
+  else {
+//    debug.p(xmlhttp.readyState);
+  }
+}
+
+function select_cand(n){ // SPANの onClick はIE で不調
+  pobox_set_curstr(pobox_cands[n]);
+  pobox_fix();
+}
+
+function pobox_disp_cand_list(){ // 候補選択欄 表示
+  var i;
+  for(i=0;i+pobox_nth_cand < pobox_cands.length && i<20;i++){
+    t = document.getElementById("cand" + i);
+    t.innerHTML = pobox_cands[i+pobox_nth_cand];
+    t.onclick = "xxxx();";
+  }
+  for(;i<20;i++){
+    t = document.getElementById("cand" + i);
+    t.innerHTML = "";
+  }
+}
+
+function pobox_clear(){ // 表示クリア
+  var i;
+  for(i=0;i<20;i++){
+    t = document.getElementById("cand" + i);
+    t.innerHTML = "";
+    pobox_cands[i] = "";
+  }
+  pobox_exact = false;
+  pobox_pat = "";
+  pobox_set_curstr("");
+}
+
+function insert_text_xxxx(domobj, text)
+{ // 
+  if (domobj.createTextRange && domobj.caretPos){
+    var caretPos = domobj.caretPos;
+    caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? text + ' ' : text;  
+  } else if (domobj.getSelection && domobj.caretPos){
+    var caretPos = domobj.caretPos;
+    caretPos.text = caretPos.text.charat(caretPos.text.length - 1) == ' ' ? text + ' ' : text;
+  } else {
+    domobj.value = domobj.value + text;
+  }
+}
+
+//
+// textareaにテキストをペーストする。意外と大変!
+// http://painter.homeip.net/~raelian/tag/enclose.html を参考にして作成。
+// http://mugi.cc/js/010104.htm をもとにしているらしい。
+//
+
+var startpos = 0, endpos = 0;
+
+function calcselpos(obj){ // textareaの選択場所を取得
+  if(obj.setSelectionRange ){ // FF/Mozila
+    startpos = obj.selectionStart;
+    endpos = obj.selectionEnd;
+  }
+  else if(document.selection.createRange ){ // IE?
+    sel =document.selection.createRange();
+    r = obj.createTextRange();
+    textlen = r.text.length;
+    r.moveToPoint(sel.offsetLeft,sel.offsetTop);
+    r.moveEnd("textedit");
+
+    startpos = textlen - r.text.length
+    endpos = startpos + sel.text.length;
+  }
+}
+
+function set_caret(obj,pos){ // textareaのposにカーソル移動
+  if(obj.setSelectionRange ){ // FF/Mozila
+    obj.setSelectionRange(pos,pos);
+  }
+  else if(document.selection.createRange ){ // IE?
+    e = obj.createTextRange();
+    tx = obj.value.substr(0,pos);
+    pl = tx.split(/\n/);
+    e.collapse(true);
+    e.moveStart("character",pos-pl.length+1);
+    e.text=e.text+"";
+    e.collapse(false);
+    e.select();
+  }
+  obj.focus();
+}
+
+function insert_text(obj,replace){
+  calcselpos(obj);
+
+  var text = obj.value;
+  var s = text.substr(0,startpos);
+  var e = text.substr(endpos,text.length-endpos);
+  obj.value = s + replace + e;
+  newpos = (s + replace).length;
+
+  set_caret(obj,newpos);
+}
+
+function delete_text(obj,n){
+  calcselpos(obj);
+
+  var text = obj.value;
+  var s = text.substr(0,startpos-n);
+  var e = text.substr(startpos,text.length-startpos);
+  obj.value = s + e
+  newpos = s.length;
+
+  set_caret(obj,newpos);
+}
+
+</script>
+
+</body>
+</html>
+

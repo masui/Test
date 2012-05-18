@@ -1,0 +1,25 @@
+    class HelloIMEView extends View {
+	public HelloIMEView(Context context, AttributeSet attrs) {
+	    super(context,attrs);
+	}
+
+	@Override public void onDraw(Canvas canvas) {
+	    canvas.drawColor(Color.BLUE);
+	}
+
+	// よくわからないがこれを設定するとViewの大きさを決められるようだ...
+	@Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	    setMeasuredDimension(320,200);
+	}
+
+	//
+	// 指を動かすたびに文字が順番に入力される....
+	//
+	String[] inputWords = {"入", "力", "文", "字", "列"};
+	int inputIndex = 0;
+	
+	public boolean onTouchEvent(MotionEvent ev) {
+	    input(inputWords[(inputIndex++) % 5]);
+	    return true;
+	}
+    }

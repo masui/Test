@@ -1,0 +1,531 @@
+<!--
+  $Date: 2008-09-30 08:53:09 +0900 (Tue, 30 Sep 2008) $
+  $Rev: 3026 $
+
+* ブラウザのキャッシュのおかげで全然検索がうまくいかないことがあることが判明。
+
+  XMLHttpRequestからCGI呼出ししても何故か実際にCGIがうごかないことがある。
+  ブラウザかどこかにキャッシュされているせいだと思われるので、
+  
+   - 副作用の残る呼出しを行なわない
+  
+  または
+  
+   - 確実にCGIが呼び出されるようにする
+  
+  を試す。
+
+* ↑ gtm.toGMTString() を引数に加えることで解決(?)
+
+* 非同期検索がまずいことも判明。
+  "abcd" と入力したとき、search.cgiはサーバに"abcd"検索を指令しているが、
+  getdata.cgiはまだ"ab"の検索結果をゲットしようとしているかもしれない。
+  辞書の状態とデータ取得の状態は完全に一致してる必要があるのだが。
+
+   - getdata.cgi では検索文字列も指定して、正しい辞書が選ばれるようにしてはどうか。
+    - 辞書が沢山できてしまうが、まぁいいか?
+    - しかし、取得した単語数nwordsと辞書とは食い違ってるかもしれない。
+
+   - searchとgetdataを分けるのをやめたらどうか?
+
+* 検索文字列ごとに辞書を作ってしまうという富豪的解決策をとりあえず採用 (2005/3/17)
+
+-->
+<html>
+<head>
+<style type="text/css">
+<!--
+body {
+	background-color: #ffffc0;
+}
+h1 {
+	font-size: 20;
+	padding: 10;
+	background-color: #80ffff;
+	border-style: none;
+	border-width: 0;
+//	border-style: solid;
+}
+div.pitecan {
+/*
+	position:absolute;
+	left:50;
+	top:100;
+*/
+	width:100%;
+	height:330;
+	background-color:white;
+	border-style: inset;
+	border-width: 1;
+}
+span.pattern {
+/*
+	position:absolute;
+	left:50;
+	top:64;
+*/
+ 	size: 100;
+	width:100;
+	height:20;
+	background-color:white;
+	border-style: solid;
+	font-size: 16;
+	padding:4;
+	font-weight: bold;
+	border-style: inset;
+	border-width: 1;
+}
+-->
+</style>
+<script language="JavaScript" src="debug.js"></script>
+<title>ピテカン辞書 @ Ajax</title>
+</head>
+
+<body>
+<h1>ピテカン辞書 @ Ajax</h1>
+
+<ul>
+<li> 単語を左右にドラッグするとズームイン/ズームアウトします。
+<li> 動きが変な場合はリロードして下さい。
+<li> <a href="browse.cgi?file=search.cgi">search.cgi</a>と
+     <a href="browse.cgi?file=getdata.cgi">getdata.cgi</a>を使っています。
+</ul>
+
+検索 ⇒ <span id="q"></span><span style="font-size:14;">[]</span>
+<p>
+<div id="pitecan" class="pitecan"></div>
+
+<!--
+<form action="post">
+<input type="text" size="20" name="q" id="q" onkeyup="search();" />
+</form>
+-->
+
+<!--
+<span id="zoomlevel" style="position:absolute;left:10;top:0;">0</span>
+<span id="gap" style="position:absolute;left:10;top:20;">0</span>
+<span id="igap" style="position:absolute;left:10;top:40;">0</span>
+-->
+
+
+<!--
+<ul>
+<li>firstindex: <span id="firstindex">0</span>
+<li>centerindex: <span id="centerindex">0</span>
+<li>nwords: <span id="nwords">0</span>
+</ul>
+-->
+
+<p>
+<font size=-1>
+$Date: 2008-09-30 08:53:09 +0900 (Tue, 30 Sep 2008) $ $Rev: 3026 $
+</font>
+
+
+<span id="text_center" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u1" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u2" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u3" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u4" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u5" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u6" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u7" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u8" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u9" style="position:absolute;left:0;top:0;"></span>
+<span id="text_u10" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d1" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d2" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d3" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d4" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d5" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d6" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d7" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d8" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d9" style="position:absolute;left:0;top:0;"></span>
+<span id="text_d10" style="position:absolute;left:0;top:0;"></span>
+
+<script type="text/javascript">
+
+var MAXWORDS = 33511;
+var LINEHEIGHT = 15.0;
+
+var word;          // 辞書エントリ配列
+var nwords;
+var xmlhttp;       // サーバとの通信
+
+var zoomlevel;     // ズーミングレベル
+var zoomfactor;    // どれだけドラッグすると2倍ズームするか
+var centerindex;   // 中心単語のインデクス
+var dispx,dispy;   // 表示単語の座標
+var mousex,mousey; // マウス座標
+var gap;           // 表示のギャップ
+var igap;          // インデクスのギャップ
+var firstindex, lastindex; // サーバから取得する単語のインデクス
+var dragging;      // ドラッグ中
+var querytext = '';
+var pitecanwin;
+
+var gtm;
+
+var mdmousex,mdmousey,mdzoomlevel,mddispx,mddispy; // MouseDown時の上記変数の値
+
+function init(){
+  xmlhttp = getXmlHttpObject();
+
+  word = new Array(MAXWORDS);
+
+  document.onmousedown = mousedown;
+  document.onmousemove = mousemove;
+  document.onmouseup = mouseup;
+  document.onkeypress = keypress;
+
+  nwords = MAXWORDS;
+  initparams(MAXWORDS);
+}
+
+function initparams(n){
+  pitecanwin = document.getElementById("pitecan");
+//alert(pitecanwin.offsetTop)
+//alert(pitecanwin.offsetLeft)
+
+  nwords = n;
+  for(i=0;i<nwords;i++){
+    word[i] = '----';
+  }
+  zoomlevel = 2.0;
+  zoomlevel = Math.floor(16 - (Math.log(nwords)/Math.log(2.0)));
+  zoomfactor = pitecanwin.offsetWidth / 20;
+  centerindex = Math.floor(nwords/2);
+//  mddispx = dispx = 100 + zoomlevel * zoomfactor;
+//  mddispy = dispy = 250;
+  mddispx = dispx = pitecanwin.offsetLeft + zoomlevel * zoomfactor + 50.0;
+  mddispy = dispy = pitecanwin.offsetTop + pitecanwin.offsetHeight/2;
+  mdmousex = mousex = dispx;
+  mdmousey = mousey = dispy;
+  dragging = false;
+  firstindex = lastindex = centerindex;
+
+  l = 12-zoomlevel;
+  if(l < 0){ l = 0; }
+  f = Math.floor(l);
+  gap = Math.pow(2.0,1.0-l+f);
+  igap = Math.pow(2,f);
+
+  calcindices();
+
+  getdictdata();
+}
+
+function settext(id,val){
+  text = document.getElementById(id);
+  text.innerHTML = val;
+}
+
+function setword(id,val,x,y){
+  text = document.getElementById(id);
+  text.innerHTML = val;
+  text.style.left = x;
+  text.style.top = y;
+
+  text.style.color = 'blue';
+  text.style.fontSize = '16px';
+  text.style.fontWeight = 'bold';
+}
+
+function keypress(event)
+{
+  var i = keycode(event);
+  t = document.getElementById("q");
+  text = t.innerHTML;
+  if(i == 0x08 || i == 0x7f || i == 0x42){
+    text = text.substring(0,text.length-1);
+  }
+  else {
+    text = text + String.fromCharCode(i);
+  }
+  t.innerHTML = text;
+
+  query(text);
+
+  return false;  // こうするとブラウザ割当のショートカットが無視されるらしい
+                 // http://www.keynavi.net/ja/tipsj/kfunc.html
+}
+
+function keycode(event)
+{
+  if(navigator.appName.indexOf("Microsoft") != -1){
+    var keycode = window.event.keyCode;
+    window.event.keyCode = 0;
+    return keycode;
+  }
+  if(navigator.appName.indexOf("Netscape") != -1)
+    return event.which;
+}
+
+function newsearch_xml() {
+  if (xmlhttp.readyState==4) {
+debug.p(xmlhttp.responseXML);
+    xmlDoc = xmlhttp.responseXML;
+    if (xmlDoc.documentElement) {
+       alert(xmlDoc.getElementsByTagName('words'));
+//     debug.p(xmlDoc.getElementsByTagName('words').item(0));
+
+//     var pref  = xmlDoc.getElementsByTagName('pref').item(0).firstChild;
+//     var city  = xmlDoc.getElementsByTagName('city').item(0).firstChild;
+//     var ville = xmlDoc.getElementsByTagName('ville').item(0).firstChild;
+//     if (pref  != null) document.getElementById('pref').value = pref.data;
+//     if (city  != null) document.getElementById('city').value = city.data;
+//     if (ville != null) document.getElementById('ville').value = ville.data;
+//  } else {
+//     document.getElementById('pref').value = '';
+//     document.getElementById('city').value = '';
+//     document.getElementById('ville').value = '';
+    }
+  }
+}
+
+function newsearch() {
+  if (xmlhttp.readyState==4) {
+    ret = xmlhttp.responseText;
+    n = parseInt(ret)
+//if(isNaN(n)){
+//  alert("NaN found 1");
+//  alert(ret);
+//}
+    if(!isNaN(n)){ // 何故かsearch.cgiからの返事取得に失敗することがあるので。
+      initparams(n);
+    }
+  }
+}
+
+function query(text){
+  querytext = text;
+  gtm = new Date();
+
+  xmlhttp = getXmlHttpObject(); // 検索のたびに新規作成するようにしてみたがあんまり変わらないみたい。
+
+  xmlhttp.open("GET", "search.cgi?q="+escape(querytext)+"&date="+escape(gtm.toGMTString()),true);
+  xmlhttp.onreadystatechange = newsearch;
+  xmlhttp.send(null);
+}
+
+function calcindices(){
+  l = 12-zoomlevel;
+  if(l < 0){ l = 0; }
+  f = Math.floor(l);
+  gap = Math.pow(2.0,1.0-l+f);
+  igap = Math.pow(2,f);
+
+  firstindex = lastindex = centerindex;
+
+  for(i=1;i<=10;i++){
+    if(centerindex - igap * i < 0){
+    }
+    else {
+      firstindex = centerindex - igap * i;
+    }
+  }
+
+  for(i=1;i<=10;i++){
+    if(centerindex + igap * i >= nwords){
+    }
+    else {
+      lastindex = centerindex + igap * i;
+    }
+  }
+}
+
+function showable(x,y) {
+  return y > pitecanwin.offsetTop &&
+         y < pitecanwin.offsetTop + pitecanwin.offsetHeight - 20;
+}
+
+function display(){
+  l = 12-zoomlevel;
+  if(l < 0){ l = 0; }
+  f = Math.floor(l);
+  gap = Math.pow(2.0,1.0-l+f);
+  igap = Math.pow(2,f);
+
+/*
+  // デバッグ用
+  settext("nwords",nwords);
+  settext("centerindex",centerindex);
+  settext("firstindex",firstindex);
+*/
+
+  dispx = mddispx + (mousex - mdmousex);
+  dispy = mddispy + (mousey - mdmousey);
+  if(showable(dispx,dispy)){
+     setword("text_center",word[centerindex],dispx,dispy);
+  }
+  else {
+     setword("text_center",'',dispx,dispy);
+  }
+
+  firstindex = lastindex = centerindex;
+  for(i=1;i<=10;i++){
+    id = "text_u" + i;
+    y = dispy - gap * LINEHEIGHT * i
+    if(centerindex - igap * i >= 0 && showable(dispx,y)){
+      firstindex = centerindex - igap * i;
+      setword(id,word[firstindex],dispx,y);
+    }
+    else {
+      setword(id,"",0,0);
+    }
+  }
+
+  for(i=1;i<=10;i++){
+    id = "text_d" + i;
+    y = dispy + gap * LINEHEIGHT * i
+    if(centerindex + igap * i < nwords && showable(dispx,y)){
+      lastindex = centerindex + igap * i;
+      setword(id,word[lastindex],dispx,y);
+    }
+    else {
+      setword(id,"",0,0);
+    }
+  }
+}
+
+function getMouseX(e){
+  if(window.opera)                            //o6!)
+      return e.clientX
+  else if(document.all && document.getElementById && (document.compatMode=='CSS1Compat')) // e6
+      return document.documentElement.scrollLeft+event.clientX
+  else if(document.all){                       //e4,e5
+      return document.body.scrollLeft+event.clientX
+  }else if(document.layers||document.getElementById)
+      return e.pageX                          //n4,n6,m1!)
+}
+
+function getMouseY(e){
+  if(window.opera)                            //o6!)
+      return e.clientY
+  else if(document.all && document.getElementById && (document.compatMode=='CSS1Compat')) // e6
+      return document.documentElement.scrollTop+event.clientY
+  else if(document.all)                       //e4,e5,e6!)
+      return document.body.scrollTop+event.clientY
+  else if(document.layers||document.getElementById)
+      return e.pageY                          //n4,n6,m1!)
+}
+
+function getXmlHttpObject() {
+    var xmlhttp;
+    /*@cc_on
+    @if (@_jscript_version >= 5)
+        try {
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xmlhttp = false;
+            }
+        }
+    @else
+        xmlhttp = false;
+    @end @*/
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        try {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.overrideMimeType("text/xml"); 
+        } catch (e) {
+            xmlhttp = false;
+        }
+    }
+    return xmlhttp;
+}
+
+function mousedown(e){
+  dragging = true;
+  mdmousex = getMouseX(e);
+  mdmousey = getMouseY(e);
+  mdzoomlevel = zoomlevel;
+  mddispx = dispx;
+  mddispy = dispy;
+
+  // 以下がピテカン処理のキモ
+  l = 12-zoomlevel;
+  if(l < 0){ l = 0; }
+  f = Math.floor(l);
+  gap = Math.pow(2.0,1.0-l+f);
+  igap = Math.pow(2,f);
+  i = Math.floor((mdmousey - dispy) / (gap * LINEHEIGHT))
+  centerindex += igap * i;
+  if(isNaN(centerindex)) centerindex = 0;
+  if(centerindex < 0) centerindex = 0;
+  if(centerindex >= nwords) centerindex = nwords-1;
+  dispy += gap * LINEHEIGHT * i;
+  mddispy = dispy;
+
+  return false; // これがあるとマウスドラッグによる文字選択などが発生しない
+}
+
+function mousemove(e){
+  if(dragging){
+    mousex = getMouseX(e);
+    mousey = getMouseY(e);
+
+    zoomlevel = mdzoomlevel + (mousex - mdmousex) / zoomfactor;
+//    zltext = document.getElementById("zoomlevel");
+//    zltext.innerHTML = zoomlevel;
+
+    display();
+  }
+  return false;
+}
+
+function mouseup(e){
+  dragging = false;
+  x = getMouseX(e);
+  y = getMouseY(e);
+
+  getdictdata();
+
+  return false;
+}
+
+function handleresponse(){
+  if (xmlhttp.readyState==4) {
+    ret = xmlhttp.responseText;
+    if (ret.length > 1){
+      b = ret.split("\t");
+
+      first = parseInt(b[0]);
+      gap = parseInt(b[1]);
+      if(!isNaN(first) && !isNaN(gap)){
+        for(i=2;i<b.length;i++){
+          word[first + (i-2) * gap] = b[i];
+        }
+        display();
+      }
+    }
+  }
+}
+
+function getdictdata(){
+  undef = false;
+  for(i=firstindex;i<=lastindex;i+=igap){
+    if(word[i].substr(0,4) == '----'){
+      undef = true
+    }
+  }
+  if(undef){
+    gtm = new Date();
+    xmlhttp = getXmlHttpObject(); ////////////////////
+    xmlhttp.open("GET", "getdata.cgi?first=" + firstindex + "&last=" + lastindex + "&gap=" + igap +
+                        "&time=" + escape(gtm.toGMTString()) + "&q=" + escape(querytext) + "",true);
+    xmlhttp.onreadystatechange = handleresponse;
+    xmlhttp.send(null);
+  }
+  setTimeout('getdictdata()',1000);
+}
+
+init();
+
+</script>
+
+</body>
+</html>

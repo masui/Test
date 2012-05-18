@@ -1,0 +1,91 @@
+This is pTeX, Version 3.141592-p3.1.10 (sjis) (Web2C 7.5.4) (format=platex 2009.8.28)  23 SEP 2011 14:58
+**floatflt.ins
+(./floatflt.ins
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2003/12/01> patch level 0)
+(/Applications/pTeX.app/teTeX/share/texmf-dist/tex/latex/base/docstrip.tex
+\blockLevel=\count81
+\emptyLines=\count82
+\processedLines=\count83
+\commentsRemoved=\count84
+\commentsPassed=\count85
+\codeLinesPassed=\count86
+\TotalprocessedLines=\count87
+\TotalcommentsRemoved=\count88
+\TotalcommentsPassed=\count89
+\TotalcodeLinesPassed=\count90
+\NumberOfFiles=\count91
+\inFile=\read1
+\inputcheck=\read2
+\off@0=\count92
+\off@1=\count93
+\off@2=\count94
+\off@3=\count95
+\off@4=\count96
+\off@5=\count97
+\off@6=\count98
+\off@7=\count99
+\off@8=\count100
+\off@9=\count101
+\off@10=\count102
+\off@11=\count103
+\off@12=\count104
+\off@13=\count105
+\off@14=\count106
+\off@15=\count107
+\@maxfiles=\count108
+\@maxoutfiles=\count109
+
+Utility: `docstrip' 2.5c <2003/09/18>
+English documentation    <1999/03/31>
+
+**********************************************************
+* This program converts documented macro-files into fast *
+* loadable files by stripping off (nearly) all comments! *
+**********************************************************
+
+********************************************************
+* No Configuration file found, using default settings. *
+********************************************************
+
+(./floatflt.ins
+
+Generating file(s) ./floatflt.sty ./floatexm.tex ./floatfge.tex 
+\openout0 = `./floatflt.sty'.
+
+\openout1 = `./floatexm.tex'.
+
+\openout2 = `./floatfge.tex'.
+
+
+Processing file floatflt.dtx (paketkod) -> floatflt.sty
+                             (exempelkod) -> floatexm.tex
+                             (gammalkod) -> floatfge.tex
+File floatflt.dtx ended by \endinput.
+Lines  processed: 1393
+Comments removed: 389
+Comments  passed: 0
+Codelines passed: 994
+
+**************************************************************
+ 
+ To finish the installation you have to move the file
+ `floatflt.sty' into a directory searched by TeX.
+ 
+ To type-set the documentation, run the file `floatflt.dtx'
+ twice through LaTeX. The original `floatfig' documentation
+ can be type-set by running the file `floatfge.tex' through 
+ LaTeX. To get an example file, run the file `floatexm.tex'
+ through LaTeX.
+ 
+*************************************************************
+) ) ) 
+Here is how much of TeX's memory you used:
+ 332 strings out of 94681
+ 3365 string characters out of 1174652
+ 56945 words of memory out of 1500000
+ 3707 multiletter control sequences out of 10000+50000
+ 7511 words of font info for 31 fonts, out of 1200000 for 2000
+ 566 hyphenation exceptions out of 8191
+ 15i,0n,15p,142b,142s stack positions out of 5000i,500n,6000p,200000b,5000s
+
+No pages of output.

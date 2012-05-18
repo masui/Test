@@ -1,0 +1,422 @@
+/* Copyright (C) 2003-2005 Kouichirou Eto, All rights reserved.
+This is free software with ABSOLUTELY NO WARRANTY.
+You can redistribute it and/or modify it under the terms of the GNU GPL2. */
+
+/* ========== for wema */
+/*@import 'wema.css';*/
+
+/* ========== adminmenu */
+.loginstatus {
+  float: left;
+}
+.adminmenu li {
+  display: inline;
+}
+.adminmenu li a {
+  padding: 0.2em 0.4em 0 0.4em;
+}
+
+/* ========== new */
+span.new { background-color: #ffc; }
+img.new {
+  border: 0;
+}
+a.new {
+  margin: 2px;
+  position: relative;
+  top: -1px;
+}
+a.new:hover { top: 0; }
+
+/* ========== external */
+a.external {
+  padding: 0 14px 0 0;
+  margin: 0 2px 0 0;
+  background: url("./external.png") no-repeat 100% 10%;
+}
+
+/* ========== sidebar form */
+.sidebar form {
+  text-align: right;
+  font-weight: bold;
+}
+.sidebar input {
+  background-color: #ffc;
+  border: 1px solid #ccc;
+  width: 8em;
+  font-weight: bold;
+}
+
+/* ========== section form */
+.section form {
+}
+.section input {
+  font-size: medium;
+}
+
+/* ========== footer */
+div.footer {
+  margin: 0;
+  padding: 0.1em 2em;
+  color: #999;
+  font-size: small;
+  clear: both;
+  font-family: Helvetica,Arial,Verdana,'MS UI Gothic',sans-serif;
+  text-align: right;
+}
+.footer a	{
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  text-decoration: none;
+}
+.footer a:link	{ color: #333; }
+.footer a:visited	{ color: #666; }
+.footer a:active,
+.footer a:hover { color: #fff; background-color: #c00; }
+
+.footer .attribute {
+  float: left;
+}
+
+/* ========== member list */
+.memberlist {
+  width: 90%;
+  height: 40ex;
+}
+
+/* ========== box */
+.box {
+  margin: 0 0;
+  padding: 0.5em;
+  background-color: #fff;
+}
+
+/* ========== table */
+table {
+  margin: 1em 0;
+  border-top: 2px double #666;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+td, th {
+  padding: 0.01em 0.45em 0.01em 0.45em;
+  border-top:    1px solid #999;
+  border-bottom: 1px solid #999;
+  border-left:   1px solid #999;
+  border-right:  1px solid #999;
+}
+
+/* ========== toc */
+.toc {
+  float: right;
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
+  font-size: small;
+}
+.toc h5 {
+  margin: 0;
+  padding: 0 10px 0 20px;
+  left: 0;
+  font-size: small;
+  background-color: #ddd;
+  border: 0;
+  font-weight: bold;
+}
+#tocinside {
+  padding: 0 0 5px 0;
+)
+}
+.toc ol {
+  margin: 5px 10px 5px 35px;
+  padding: 0;
+}
+.toc ol ol {
+  margin: 0 0.5em;
+}
+
+/* ========== ref */
+.ref {
+  float: right;
+  margin: 0 10px;
+  padding: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: x-small;
+}
+.ref form {
+  margin: 0;
+  padding: 0;
+}
+.ref p {
+  margin: 0;
+  padding: 0;
+}
+.ref input {
+  width: 6em;
+  margin: 0;
+  padding: 0;
+  background-color: #ffc;
+  border: 1px solid #999;
+  font-size: small;
+  font-weight: normal;
+}
+
+.ref img.icon {
+  margin: 3px 10px 0 10px;
+  padding: 0;
+  border: 0;
+}
+.ref img.thumb {
+  margin: 3px 3px 0 3px;
+  padding: 0;
+  border: 0;
+}
+.ref a {
+  text-decoration: none;
+}
+
+/* ========== exception */
+table.exception {
+  background-color: #fff;
+}
+.exception td {
+  font-size: small;
+  background-color: #fdd;
+}
+.exception td.line {
+  text-align: right;
+}
+.exception td.excerpt {
+  background-color: #fff;
+  padding: 0;
+}
+
+/* ========== excerpt */
+.excerpt table {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+}
+.excerpt td, .excerpt th {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  background-color: #fff;
+}
+.excerpt th {
+  padding: 0 0.3em;
+  border-right: 1px solid #ccc;
+  font-size: x-small;
+}
+.excerpt tr.even td, .excerpt tr.even th {
+  background-color: #fff;
+}
+.excerpt tr.odd td, .excerpt tr.odd th {
+  background-color: #fee;
+}
+.excerpt tr.target td, .excerpt tr.target th {
+  background-color: #fbb;
+}
+.excerpt pre {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  font-size: small;
+  background-color: transparent;
+}
+
+/* ========== exception */
+span.date {
+  margin: 0 0.7em 0 0;
+  padding: 0 0.7em 0 0;
+  border-right: 2px dotted;
+  font-family: Georgia,serif;
+}
+
+/* ========== qrcode */
+div.qrcode {
+  float: right;
+  padding: 0 0 8px 0;
+  background-color: #fff;
+  border: 0;
+  font-size: 60%;
+  text-align: center;
+}
+.qrcode img {
+  padding: 1px;
+  border: 0;
+}
+.qrcode a {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  text-decoration: none;
+}
+.qrcode a:link	{ color: #333; }
+.qrcode a:visited	{ color: #666; }
+.qrcode a:active,
+.qrcode a:hover { color: #fff; background-color: #c00; }
+table.qrcode {
+  border: 8px solid #fff;
+  margin: auto;
+  padding: 0;
+}
+.qrcode th, .qrcode td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 2px;
+  height: 2px;
+}
+.qrcode th { background-color: #000; }
+.qrcode td { background-color: #fff; }
+
+/* ============================== main day comment */
+.comment {
+  clear: both;
+}
+
+/* ========== hcomment */
+.hcomment {
+  margin: 0;
+  padding: 0;
+  font-size: medium;
+}
+.hcomment input {
+  margin: 0;
+  padding: 1px;
+  border-width: 2px;
+  font-weight: normal;
+  font-size: small;
+}
+
+/* ========== label */
+a.label	{
+  margin: 0 0.2em 0 0;
+  padding: 0;
+  text-decoration: none;
+  font-size: 85%;
+}
+a:link.label	{ color: #fff; }
+a:visited.label	{ color: #fff; }
+a:active.label,
+a:hover.label { color: #fff; background-color: #000; }
+
+/* ========== attribute */
+.attribute {
+  margin: 0 0.5em 0 0;
+  padding: 0 0.2em;
+}
+
+/* ========== ago */
+.ago {
+  color: #ccc;
+  font-size: small;
+}
+
+/* ========== act-history */
+/* ===== .era */
+.era {
+  position: absolute;
+  visibility: hidden;
+  left: 30px;
+  top: 150px;
+}
+
+.period {
+  margin: 10px 0;
+  padding: 0.5em;
+  background-color: #eee;
+  border: 1px solid #666;
+}
+
+/* ========== aa, ascii art */
+.aa {
+  border: 1px solid #eee;
+  line-height: 1.05;
+  font-family: "ÇlÇr ÇoÉSÉVÉbÉN";
+}
+
+/* ========== code */
+.code pre {
+  padding: 5px;
+  font-size: small;
+  line-height: 100%;
+}
+
+/* ============================================================ wysiwyg */
+
+/* ===== .wysiwyg #toolbar */
+.wysiwyg #toolbar {
+  margin: 0 1em;
+  padding: 2px 0 3px 0;
+  border: 0;
+  background-color: #bbe;
+}
+.wysiwyg #toolbar span {
+  margin: 0 0;
+  padding: 4px 4px;
+  border-left: 3px outset #99c;
+}
+.wysiwyg #toolbar a {
+  margin: 0 1px;
+  padding: 0 0.4em;
+  border: 2px outset;
+  background-color: #ddd;
+  text-decoration: none;
+  font-size: small;
+  font-family: verdana;
+}
+.wysiwyg #toolbar a:link		{ color: #099; }
+.wysiwyg #toolbar a:visited	{ color: #066; }
+.wysiwyg #toolbar a:active,
+.wysiwyg #toolbar a:hover { color: #fff; background-color: #099; text-decoration: none;}
+
+.wysiwyg #toolbar .file {
+  border-left: 3px outset #c99;
+  background-color: #c33;
+}
+.wysiwyg #toolbar .file a:link		{ color: #933; }
+.wysiwyg #toolbar .file a:visited	{ color: #633; }
+.wysiwyg #toolbar .file a:active,
+.wysiwyg #toolbar .file a:hover { color: #fff; background-color: #933; text-decoration: none;}
+
+/* ===== .wysiwyg #weditor */
+.wysiwyg #weditor {
+  margin: 0 1em;
+  padding: 1em;
+  border: 2px inset;
+  background: #fff;
+  height: 400px;
+  overflow: scroll;
+}
+
+/* ========== print out */
+@media print {
+  body, p, dl, ul, ol, table, td, tr, blockquote {
+    font-family: ç◊ñæí©ëÃ,"ÇlÇr Çoñæí©",serif ! important;
+    background: transparent ! important;
+  }
+  h1, h2, h3, h4, em, strong, th {
+    font-family: Osaka,"ÇlÇr ÇoÉSÉVÉbÉN",sans-serif ! important;
+    font-weight: bold ! important;
+    background: transparent ! important;
+  }
+  .adminmenu, .sidebar, .footer, a.new {
+    display: none ! important;
+  }
+  .main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* end */

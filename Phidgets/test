@@ -1,0 +1,21 @@
+require 'Win32API'
+
+# result = CPhidgetWeightSensor_open(&WGT, false, -1);
+w = Win32API.new('phidget20.dll','CPhidgetWeightSensor_open',%w(p i i), 'i')
+p = w.call("xxxxxxxxxxxxxxxxxxxx",0,-1)
+
+puts p
+
+
+#Win32API.new(dllname, proc, import, export)
+#
+#    DLL dllname をロードし、API関数 proc のオブジェクトを生成します。import には proc の引数の型のリストを、 export には proc の戻り値の型を指定します。
+#
+#    型の指定は以下の文字列または配列です。
+#
+#        * "p" ポインタ
+#        * "n", "l" long *1
+#        * "i" int
+#        * "v" void
+#
+#    import が nil の場合は

@@ -1,0 +1,1 @@
+:display "Next Page" at 30 with center size 20 style bold fade 1 label "hello" wipe 1 direction right

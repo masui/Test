@@ -1,0 +1,4 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces The \texttt {floatingfigure} environment with \texttt {60mm} for \textit {width} and no \textit {option}.}}{1}
+\contentsline {figure}{\numberline {2}{\ignorespaces The \texttt {floatingfigure} environment with \texttt {40mm} for \textit {width} and the \texttt {r} \textit {option}.}}{2}
+\contentsline {figure}{\numberline {3}{\ignorespaces The \texttt {floatingfigure} environment with \textit {width} set to \texttt {50mm} and the \texttt {l} \textit {option}.}}{3}
+\contentsline {figure}{\numberline {4}{\ignorespaces A \texttt {floatingfigure} environment which uses \texttt {90mm} for \textit {width} and the \texttt {p} \textit {option}.}}{4}

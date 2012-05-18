@@ -1,0 +1,66 @@
+#
+#	list.cgi や write.cgi があまりに遅いので、一度に多数起動できないようにする。
+#	重要だが時間がかかる操作は op.exec { ... } と書き、毎回起動する必要がない
+#	リストなどの操作は op.exec_if_possible { ... } と書く。
+#
+
+class OneProcess
+  EXPIRE = 1000
+  SLEEPTIME = 10
+
+  def initialize(lockfile="lock")
+    @lockfile = lockfile
+  end
+
+  def lock
+    File.open(@lockfile,"w"){ |f|
+      f.puts
+    }
+  end
+
+  def unlock
+    File.delete(@lockfile)
+  end
+
+  def executable?
+    # 実行可能状態かチェック
+    if File.exist?(@lockfile) then
+      if Time.now - File.mtime(@lockfile) > EXPIRE then
+        unlock
+        true
+      else
+        false
+      end
+    else
+      true
+    end
+  end
+
+  def exec_if_possible
+    if executable? then
+      lock
+      yield
+      unlock
+    end
+  end
+
+  def exec
+    while !executable? do
+      sleep SLEEPTIME
+    end
+    lock
+    yield
+    unlock
+  end
+end
+
+if __FILE__ == $0 then
+  fork {
+    op = OneProcess.new("lock")
+    op.exec {
+#    op.exec_if_possible {
+      sleep 3
+      puts "aaa"
+    }
+  }
+end

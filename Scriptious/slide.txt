@@ -1,0 +1,25 @@
+:set audio_duration to 20
++0
+:picture "http://www.pitecan.com/PhotoBrowser/photo/20060422194329/20040901173921.jpg" at {0,0} size {1024,760} fade 1 label "slide0"
++1
+:display "2004/9/1 17:39:21" transparency 20 at {50,15} size 40 color yellow label "text0"
+:slide "text0" by {300,0} duration 7
+:display "" transparency 20 at {40,650} size 30 color white label "comment0"
++4
+:picture "http://www.pitecan.com/PhotoBrowser/photo/20060422194329/20041226155726.jpg" at {0,0} size {1024,760} fade 1 label "slide1"
++5
+:display "2004/12/26 15:57:26" transparency 20 at {50,15} size 40 color yellow label "text1"
+:slide "text1" by {300,0} duration 7
+:display "" transparency 20 at {40,650} size 30 color white label "comment1"
++8
+:picture "http://www.pitecan.com/PhotoBrowser/photo/20060422194329/20050320174356.jpg" at {0,0} size {1024,760} fade 1 label "slide2"
++9
+:display "2005/3/20 17:43:56" transparency 20 at {50,15} size 40 color yellow label "text2"
+:slide "text2" by {300,0} duration 7
+:display "" transparency 20 at {40,650} size 30 color white label "comment2"
++12
+:picture "http://www.pitecan.com/PhotoBrowser/photo/20060422194329/20050423175711.jpg" at {0,0} size {1024,760} fade 1 label "slide3"
++13
+:display "2005/4/23 17:57:11" transparency 20 at {50,15} size 40 color yellow label "text3"
+:slide "text3" by {300,0} duration 7
+:display "" transparency 20 at {40,650} size 30 color white label "comment3"

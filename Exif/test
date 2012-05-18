@@ -1,0 +1,97 @@
+require 'rjpeg.rb'
+require 'rexif_gps'
+require 'wgs2tky'
+
+Jpeg.use_class_for(Jpeg::Segment::APP1,Exif)
+
+
+
+def test(file)
+  begin
+    exif = Jpeg::open(file,Jpeg::PARSE_HEADER_ONLY).app1
+    puts exif.ifd0.date_time
+    begin
+      gps = exif.ifd0.gpsifd
+      puts gps.latitude.value
+    rescue
+      puts "==================== gps not found"
+    end
+  rescue
+    puts "no exif"
+  end
+end
+
+
+def test_x(file)
+#  exif = Jpeg::open(file,Jpeg::PARSE_HEADER_ONLY).app1
+  File.open(file){ |f|
+    begin
+      exif = Jpeg.new(f,Jpeg::PARSE_HEADER_ONLY).app1
+      puts exif.ifd0.date_time
+#      puts exif.tags[Exif::Ifd::Directory::DateTime]
+#exit
+      puts exif.is_exif?
+      puts gps.latitude.value
+      begin
+        gps = exif.ifd0.gpsifd
+      rescue
+        puts "==================== gps not found"
+      end
+    rescue
+      puts "=============app1 not found"
+    end
+  }
+end
+	
+#return nil unless(exif.is_exif?)
+#return nil unless(exif.ifd0.gpsifd)
+#	
+#	gps = exif.ifd0.gpsifd
+#
+#	if(	gps.latitude_ref.value=="N"	&&
+#		gps.longitude_ref.value=="E"	&&
+#		(gps.map_datum.value=="TOKYO"	||
+#		 gps.map_datum.value=="WGS-84"))
+#				
+#		latitude = gps.latitude.value
+#		longitude = gps.longitude.value
+#				
+#		if(gps.map_datum.value=="WGS-84")
+#			Wgs2Tky.conv!(latitude,longitude)
+#		end
+#		return "#{sprintf("%d/%d/%.3f",*latitude)}", "#{sprintf("%d/%d/%.3f",*longitude)}"
+#	end
+
+photos = [
+#  '15151908_90.jpg',
+#  '20050307160532.jpg',
+#  '20050307160557.jpg',
+  '00176.jpg',
+  'CIMG6588.JPG',
+  'CIMG7049.JPG',
+  'DSC05220.JPG',
+  'IMG_1052.JPG',
+  'IMG_1321.JPG',
+  'IMG_2820.JPG',
+  'SANY0001.JPG',
+  'SANY0002.JPG',
+  'SANY0312.jpg',
+  'SANY0313.jpg',
+  'devil.jpg',
+  'fit2005_logo.jpg',
+  'gibsonmagic.jpg',
+  'harada.jpg',
+  'jazz.jpg',
+  'masui-southpark.jpg',
+  'masui.jpg',
+  'ozawa.jpg',
+  'ponshu.jpg',
+  'prosym.gif',
+  'prosym.jpg',
+]
+
+photos.each { |photo|
+puts photo
+  test(photo)
+}
+

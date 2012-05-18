@@ -1,0 +1,102 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = CE377E860AE59F9700FC8880 /* HelloWorld */;
+		activeTarget = 8D1107260486CEB800E47090 /* HelloWorld */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* HelloWorld */,
+		);
+		breakpointsGroup = CE377EC20AE5AC5F00FC8880 /* XCBreakpointsBucket */;
+		codeSenseManager = CE377E990AE59FA100FC8880 /* Code sense */;
+		executables = (
+			CE377E860AE59F9700FC8880 /* HelloWorld */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					243,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 182907312;
+			PBXWorkspaceStateSaveDate = 182907312;
+		};
+		sourceControlManager = CE377E980AE59FA100FC8880 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* HelloWorld */ = {
+		activeExec = 0;
+		executables = (
+			CE377E860AE59F9700FC8880 /* HelloWorld */,
+		);
+	};
+	CE377E860AE59F9700FC8880 /* HelloWorld */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = HelloWorld;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	CE377E980AE59FA100FC8880 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	CE377E990AE59FA100FC8880 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	CE377E9B0AE59FD700FC8880 /* HelloView.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {668, 1176}}";
+			sepNavSelRange = "{3022, 0}";
+			sepNavVisRect = "{{0, 560}, {459, 186}}";
+		};
+	};
+	CE377EC20AE5AC5F00FC8880 /* XCBreakpointsBucket */ = {
+		isa = XCBreakpointsBucket;
+		name = "プロジェクトブレークポイント";
+		objects = (
+		);
+	};
+}

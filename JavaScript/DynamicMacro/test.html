@@ -1,0 +1,130 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>title</title>
+</head>
+<body>
+
+<textarea id="textarea">
+</textarea>
+<p>
+<input type="button" value="test" onmousedown="keygen()">
+<p>
+Keycode = <span id="keycode"></span><br>
+charCode = <span id="charcode"></span><br>
+shiftKey = <span id="shiftkey"></span><br>
+controlKey = <span id="controlkey"></span><br>
+metaKey = <span id="metakey"></span><br>
+altKey = <span id="altkey"></span><br>
+
+</body>
+<script type="text/javascript">
+var target = document.getElementById('textarea');
+
+var event = {};
+event.charCode = 96;
+event.keyCode = 96;
+
+// createEvent()は以下参照
+// https://developer.mozilla.org/en/DOM/document.createEvent
+//
+// initKeyEvent()
+// https://developer.mozilla.org/en/DOM/event.initKeyEvent
+// event.initKeyEvent (type, bubbles, cancelable, viewArg, 
+//                        ctrlKeyArg, altKeyArg, shiftKeyArg, metaKeyArg, 
+//                        keyCodeArg, charCodeArg) 
+//
+// http://mxr.mozilla.org/mozilla-central/source/dom/interfaces/events/nsIDOMKeyEvent.idl
+//
+
+function alt(event){
+  document.getElementById("keycode").innerHTML = event.keyCode;
+  document.getElementById("charcode").innerHTML = event.charCode;
+  document.getElementById("shiftkey").innerHTML = event.shiftKey;
+  document.getElementById("controlkey").innerHTML = event.ctrlKey;
+  document.getElementById("metakey").innerHTML = event.metaKey;
+  document.getElementById("altkey").innerHTML = event.altKey;
+
+  var keyEvent = document.createEvent("KeyboardEvent");
+  keyEvent.initKeyEvent(
+    "keypress",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,
+                      //  Specifies UIEvent.view. This value may be null.
+    false,            //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    event.shiftKey,   //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    event.keyCode,    //  in unsigned long keyCodeArg,
+    event.keyCode);   //  in unsigned long charCodeArg); 
+
+//  keyEvent.initKeyEvent("keypress", true, true, window,
+//    false, false, false, false, event.keyCode, event.keyCode);
+//    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
+//    options.keyCode, options.charCode );
+
+
+//  target.dispatchEvent(keyEvent);
+}
+
+function keygen(){
+
+//BrowserPageInfo();
+//BrowserDownloadsUI();
+//goDoCommand("cmd_paste");
+
+var textarea = document.commandDispatcher.focusedElement;
+alert(textarea);
+
+
+var event = document.createEvent("KeyboardEvent");
+event.initKeyEvent("keypress", true, true, null, false, false, false, false, 0x28, 0);
+target.dispatchEvent(event);
+
+  var keyEvent = document.createEvent("KeyboardEvent");
+  keyEvent.initKeyEvent(
+    "keydown",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,
+                      //  Specifies UIEvent.view. This value may be null.
+    false,             //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    false,            //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    37,               //  in unsigned long keyCodeArg,
+    0);              //  in unsigned long charCodeArg); 
+  target.dispatchEvent(keyEvent);
+  keyEvent = document.createEvent("KeyboardEvent");
+  keyEvent.initKeyEvent(
+    "keypress",        //  in DOMString typeArg,
+    true,             //  in boolean canBubbleArg,
+    true,             //  in boolean cancelableArg,
+    null,             //  in nsIDOMAbstractView viewArg,
+                      //  Specifies UIEvent.view. This value may be null.
+    false,             //  in boolean ctrlKeyArg,
+    false,            //  in boolean altKeyArg,
+    false,            //  in boolean shiftKeyArg,
+    false,            //  in boolean metaKeyArg,
+    37,               //  in unsigned long keyCodeArg,
+    0);              //  in unsigned long charCodeArg); 
+  target.dispatchEvent(keyEvent);
+}
+
+var oEvent = document.createEvent("KeyEvents");
+oEvent.initKeyEvent("keypress", true, true, window,
+    false, false, false, false, 65, 65);
+//    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
+//    options.keyCode, options.charCode );
+
+target.addEventListener("keypress",alt,true);
+
+target.dispatchEvent(oEvent);
+
+setTimeout(keygen,4000);
+
+</script>
+</html>
+
+

@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>キャレットに追随するオブジェクト</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+</head>
+<body>
+
+<h1>Textareaのキャレットに追随するオブジェクト</h1>
+
+というのを作ろうとしたら異様に手間がかかってしまった。
+<ul>
+<li>Firefoxだとちゃんと動く
+<li>Safari, IEだとスクロールバーが表示されなければ動く
+<li>Operaではよくわからない動きをする
+</ul>
+うまい方法があれば教えて下さい...
+
+<p>
+2007/2/3 Toshiyuki Masui masui@pitecan.com
+
+<p>
+<textarea id='textarea1' rows=10 cols=50" style='font-size:10pt;'>abcdefg</textarea>
+
+<p>
+<textarea id='textarea2' rows=4 cols=30 style='font-size:20pt;'>ABCDEFG</textarea>
+
+<!--
+<p>
+<textarea>
+abcdefg
+</textarea>
+
+<p>
+<textarea>
+abcdefg
+</textarea>
+
+<p>
+<input type='text' id="myinput" size=40>
+</form>
+-->
+
+<script type="text/javascript">
+function FollowCursor(e){
+  e.followCursor = this;
+
+  // idが無い場合はユニークなidを付加
+  if(! e.id){
+    if(! FollowCursor.idcount) FollowCursor.idcount = 0;
+    e.id = "followcursor_" + String(FollowCursor.idcount++);
+  }
+
+  // textareaなどの親要素をたぐって絶対位置を知る
+  var p = e;
+  this.posX = 0;
+  this.posY = 0;
+  while(p){
+    this.posX += p.offsetLeft;
+    this.posY += p.offsetTop;
+    p = p.offsetParent;
+  }
+
+  var pre = document.createElement('pre');
+  this.pre = pre;
+  pre.wrap = 'virtual';
+//  pre.width = e.clientWidth;         // 折り返しの指定に必要? Firefoxだと要る?
+  pre.style.width = e.clientWidth; 
+
+  //pre.style.whiteSpace = 'pre-wrap'; // Safariなどではまだ存在しないようだ
+  pre.style.whiteSpace = 'normal';
+  //pre.style.whiteSpace = 'pre';
+  pre.style.wordWrap = 'normal';
+  pre.style.wrap = 'normal';
+  pre.style.wordBreak = 'break-all';
+  pre.style.position = 'absolute';
+  pre.style.fontSize =  this.getPropertyValue(e,"font-size");
+  pre.style.fontFamily = this.getPropertyValue(e,"font-family");
+  pre.style.fontStyle =  this.getPropertyValue(e,"font-style");
+//  pre.style.lineHeight =  this.getPropertyValue(e,"line-height"); // Operaで動かない
+  pre.style.layoutGridLine = this.getPropertyValue(e,"layout-grid-line");
+  pre.style.marginLeft =  this.getPropertyValue(e,"margin-left");
+  pre.style.marginTop =  this.getPropertyValue(e,"margin-top");
+  pre.style.marginRight =  this.getPropertyValue(e,"margin-right");
+  pre.style.marginBottom =  this.getPropertyValue(e,"margin-bottom");
+  pre.style.paddingLeft =  this.getPropertyValue(e,"padding-left");
+  pre.style.paddingTop =  this.getPropertyValue(e,"padding-top");
+  pre.style.paddingRight =  this.getPropertyValue(e,"padding-right");
+  pre.style.paddingBottom =  this.getPropertyValue(e,"padding-bottom");
+  pre.style.display = 'block';
+pre.style.backgroundColor = 'blue';
+  pre.style.visibility = 'hidden';
+  pre.style.left = this.posX;
+  pre.style.top = this.posY;
+  document.body.appendChild(pre);
+
+  div = document.createElement('div');
+  this.div = div;
+  div.style.backgroundColor = 'yellow';
+  div.style.position = 'absolute';
+  div.style.width = pre.style.fontSize;
+  div.style.height = pre.style.fontSize;
+  document.body.appendChild(div);
+
+  if (window.addEventListener) { // W3C
+    window.addEventListener('keyup', this.keyup, true);
+  } else if (window.attachEvent) { // IE
+    document.attachEvent('onkeyup', this.keyup);
+  }
+
+  this.setCursor(this,e);
+}
+
+FollowCursor.prototype.getPropertyValue = function(e,name){
+  if(e.currentStyle) { //IE
+    name = name.replace(/-([a-z])/g,function($0,$1){ return $1.toUpperCase(); })
+    return e.currentStyle[name];
+  }
+  else if(document.defaultView.getComputedStyle) { //Mozilla
+    return document.defaultView.getComputedStyle(e,'').getPropertyValue(name);
+  }
+}
+
+FollowCursor.prototype.keyup = function(event){
+  var e = event.target
+  if(! e) e = event.srcElement; // IE
+  var fc = e.followCursor;
+  fc.setCursor(fc,e);
+}
+
+FollowCursor.prototype.setCursor = function(fc,e){
+  var startpos, endpos;
+
+  // 選択領域を知る  
+  if(e.setSelectionRange ){ // FF/Mozila
+    startpos = e.selectionStart;
+    endpos = e.selectionEnd;
+  }
+  else if(document.selection.createRange ){ // IE
+    var sel = document.selection.createRange();
+    var r = e.createTextRange();
+    var textlen = r.text.length;
+    r.moveToPoint(sel.offsetLeft,sel.offsetTop);
+    r.moveEnd("textedit");
+    startpos = textlen - r.text.length
+    endpos = startpos + sel.text.length;
+  }
+
+  // textarea内のカーソルまでの文字をpreにコピーし、その先にspan要素を置く
+  var id = e.id + "_span_";
+  s = e.value.substring(0,endpos).replace(/\n\r?/g,'　<br/>');
+  fc.pre.innerHTML = s + '<span id="' + id + '">*</span>';
+
+  // span要素の位置にdivを配置
+  var ide = document.getElementById(id);
+  fc.div.style.left = fc.posX + ide.offsetLeft - e.scrollLeft + 20;
+  fc.div.style.top = fc.posY + ide.offsetTop - e.scrollTop + 2;
+}
+
+window.onload = function(){
+  var e = document.getElementById('textarea1');
+  var f = new FollowCursor(e);
+  e = document.getElementById('textarea2');
+  f = new FollowCursor(e);
+
+//  elements = document.getElementsByTagName('textarea');
+//  for(i=0;i<elements.length;i++){
+//    e = elements[i];
+//    f = new FollowCursor(e);
+//  }
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+require 'rss/1.0'
+require 'open-uri'
+
+url = 'http://del.icio.us/rss/masui'
+
+content = ''
+open(url){ |f|
+  content = f.read
+}
+
+rss = ''
+begin
+  rss = RSS::Parser::parse(content)
+rescue RSS::InvalidRSSError
+  rss = RSS::Parser::parse(content,false)
+end
+
+rss.channel.items.Seq.lis.each { |i|
+  puts i.resource
+}
+
+
+exit
+
+rss.items.each{|i|
+  puts i
+#  i.dc_subjects.each{|s|
+#    puts s.content
+#  }
+}

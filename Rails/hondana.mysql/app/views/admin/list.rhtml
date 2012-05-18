@@ -1,0 +1,27 @@
+<h1>書籍情報リスト<h1>
+
+<table>
+  <tr>
+  <% for column in Bookinfo.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for bookinfo in @bookinfos %>
+  <tr>
+  <% for column in Bookinfo.content_columns %>
+    <td><%=h bookinfo.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => bookinfo %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => bookinfo %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => bookinfo }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @bookinfo_pages.current.previous } if @bookinfo_pages.current.previous %>
+<%= link_to 'Next page', { :page => @bookinfo_pages.current.next } if @bookinfo_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New bookinfo', :action => 'new' %>

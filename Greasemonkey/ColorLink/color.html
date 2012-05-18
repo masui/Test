@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>title</title>
+<script type="text/javascript">
+function bgcolor(val){
+  // valÇÕ0Å`9999
+  r = "ff";
+  g = "ff";
+  b = Math.floor(0xe0 - (val / 10000.0) * 0xe0).toString(16);
+  b = ("0" + b).substr(-2,2);
+  return "#" + r + g + b;
+}
+</script>
+</head>
+<body>
+
+<div id="id0" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id1000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id2000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id3000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id4000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id5000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id6000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id7000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id8000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+<div id="id9000" style="background-color:#ffff00;width:100pt;height:30pt;"></div><br>
+
+<script>
+
+for(var i=0;i<10;i++){
+  v = i * 1000;
+  d = document.getElementById('id' + v);
+  d.style.backgroundColor = bgcolor(v);
+}
+
+
+</script>
+
+</body>
+</html>

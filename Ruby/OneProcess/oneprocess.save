@@ -1,0 +1,39 @@
+class OneProcess
+  EXPIRE = 1000
+  SLEEPTIME = 10
+
+  def initialize(lockfile="lock")
+    @lockfile = lockfile
+  end
+
+  def exec
+    # lockfileが存在しないか、すごく古い場合は実行する。
+    # 新しいlockfileが存在する場合は待つ。
+    while true do
+      if File.exist?(@lockfile) then
+        tlock = File.mtime(@lockfile)
+        tnow = Time.now
+        t = tnow - tlock
+        break if t > EXPIRE
+        sleep SLEEPTIME
+      else
+        break
+      end 
+    end
+    File.open(@lockfile,"w"){ |f|
+      f.puts
+    }
+    yield
+    File.delete(@lockfile)
+  end
+end
+
+if __FILE__ == $0 then
+  fork {
+    op = OneProcess.new("lock")
+    op.exec {
+      sleep 3
+      puts "aaa"
+    }
+  }
+end

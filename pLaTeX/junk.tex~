@@ -1,0 +1,42 @@
+\documentclass[a5j,openany,papersize,oneside]{tbook}
+\usepackage{graphicx}
+\begin{document}
+
+\frontmatter
+% \tableofcontents
+
+\mainmatter
+
+\chapter{インタフェースの心理学}
+
+\section{情報視覚化}
+
+図\ref{DiskInventoryX}はMacnのDisk Inventory Xというソフトで
+私のホームディレクトリの中のファイルの大きさを視覚化したものです。
+大きなファイルが大きな矩形で表現され、ファイルをまとめたフォルダも矩形として階層的に表現されています。
+また下図はWindowsのSequoiaViewというソフトを使ってファイルの大きさを視覚化した例です。
+後発のDisk Inventory XはおそらくSequoiaViewに触発されたと思われるので外見がよく似ていますが、
+階層的に配置した矩形の集合でファイルサイズを表現するという方法は
+University of MarylandのHuman-Computer Interaction Lab\footnote{
+ http:aaabbbbcc.ccc
+}で開発されたTreeMapというシステムがオリジナルです。
+ディスクの中にどんな大きさのファイルがどれほどあるのかはわかりにくいものですが、
+TreeMapのような方法を使うと大きなファイルの分布を直感的に把握することができます。
+このように、大量の情報をうまく画面上に表示することによって
+理解を助けるテクニックを情報視覚化 (\textbf{Information Visualization})と呼びます。
+
+什么什么
+
+% \begin{figure}
+% \includegraphics[width=7cm,angle=90,bb=0 0 421 340]{b8023bc4426a31f2b45e07708d93378e.png}
+% \caption{図のサンプル}
+% \label{DiskInventoryX}
+% \end{figure}
+
+\backmatter
+
+後ろのmatter
+
+\end{document}
+
+

@@ -1,0 +1,30 @@
+<html>
+<head>
+<script language="JavaScript" src="debug0.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+// print(variable): variableの内容を出力バッファに保存
+// flush(): 出力バッファの内容をデバッグウィンドウに出力
+// clear(): 出力バッファの内容をクリア
+// setDebug(true | false): デバッグ情報を出力する(true)か出力しない(false)かを設定
+// inspect(obj): オブジェクトの内容をわかりやすい文字列にする
+// p(obj): inspectした結果を表示する
+
+
+var a = 100;
+var b = "abcdefg";
+//debug.setDebug(true);
+//debug.clear();
+//debug.p(a);
+debug.print(a);
+debug.print(b);
+debug.refresh();
+//debug.flush();
+//debug.inspect(a);
+///debug.p(a);
+
+</script>
+aaaaaa
+</body>
+</html>

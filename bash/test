@@ -1,0 +1,4 @@
+function ccd {
+    echo aho
+}
+

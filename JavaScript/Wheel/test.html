@@ -1,0 +1,54 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript">
+//
+// http://adomas.org/javascript-mouse-wheel/
+//
+function handle(delta) {
+	var s = delta + ": ";
+	if (delta < 0)
+		s += "down";
+	else
+		s += "up";
+	document.getElementById('delta').innerHTML = s;
+}
+
+function wheel(event){
+	var delta = 0;
+	if (!event) event = window.event;
+	if (event.wheelDelta) {
+		delta = event.wheelDelta/120; 
+		if (window.opera) delta = -delta;
+	} else if (event.detail) {
+		delta = -event.detail/3;
+	}
+	if (delta)
+		handle(delta);
+}
+
+/* Initialization code. */
+if (window.addEventListener)
+  window.addEventListener('DOMMouseScroll', wheel, false); // for Firefox
+window.onmousewheel = document.onmousewheel = wheel;       // for Safari, etc.
+
+updown = "up"
+window.onmousedown = function(event){
+//  alert(event.which);
+  updown = "down";
+  document.getElementById('updown').innerHTML = updown;
+}
+window.onmouseup = function(event){
+//  alert(event.which);
+  updown = "up";
+  document.getElementById('updown').innerHTML = updown;
+}
+
+</script>
+</head><body>
+<div id="delta">0.3333333333333333: up</div>
+
+<br>
+<div id="updown"></div>
+
+</body></html>

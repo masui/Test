@@ -1,0 +1,13 @@
+require "mysql"
+
+my = Mysql::new("localhost", "hondana", "", "hondana")
+res = my.query("select * from book")
+res.each_hash do |hash|
+  hash.each { |key,val|
+    puts "#{key} => #{val}"
+  }
+  exit
+end
+
+
+

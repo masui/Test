@@ -1,0 +1,10 @@
+require "socket"
+s = TCPSocket.new("133.27.58.203",4321)
+
+while true do
+  v = rand(20) * 10
+  s.send("Phidgets,Out,Servo,14264,0,#{v}\r\n",0)
+  sleep 2
+end
+
+# 133.27.58.203

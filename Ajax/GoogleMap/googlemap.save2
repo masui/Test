@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Google Maps</title>
+<meta name="save" content="history"/>
+
+<style type="text/css">
+body {
+    background-color: white;
+    color: black;
+    font-family: Arial;
+    margin-top: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 0px;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    padding: 0;
+}
+img {
+    border: 0;
+}
+a {
+    color: #0000cc;
+}
+#logo {
+    width: 150px;
+    height: 55px;
+    border: 0px none transparent;
+}
+#header {
+    position: relative;
+    z-index: 1000;
+    background-color: white;
+}
+#header td {
+    background-color: white;
+}
+#header .logo {
+    padding-right: 10px;
+}
+#header .form .menu {
+    padding-bottom: 4px;
+    padding-left: 2px;
+    font-size: small;
+}
+#header .boxlabel {
+    font-size: 70%;
+    padding-top: 1px;
+    padding-left: 1px;
+}
+a.selected {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+#headertitle {
+    position: relative;
+    z-index: 1000;
+    border-top: 1px solid #ff9900;
+    background-color: #ffeac0;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    width: 100%;
+}
+#headertitle td.title {
+    font-size: large;
+    font-weight: bold;
+    padding-left: 3px;
+    white-space: nowrap;
+}
+#toggle {
+    font-size: small;
+    text-align: right;
+    padding-right: 3px;
+}
+#page {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+#map {
+    position: relative;
+    z-index: 0;
+    border: 1px solid silver;
+    margin-right: 16.85em;
+    height: 100%;
+}
+form {
+    margin: 0;
+}
+.help {
+    font-size: x-small;
+    vertical-align: top;
+    white-space: nowrap;
+    padding-left: 7px;
+}
+#directions_form td.reverse {
+    padding-left: 2px;
+    padding-right: 2px;
+    vertical-align: middle;
+}
+.example {
+    color: gray;
+}
+table.directions td, table.dirsummary td {
+    font-size: small;
+    border: 1px solid silver;
+    padding: 3px;
+    vertical-align: top;
+}
+table.directions {
+    margin-bottom: 0.75em;
+}
+div.dirlegal {
+    margin-bottom: 2em;
+    font-size: 70%;
+    color: #666666;
+}
+div.reverse {
+    margin-top: 0.75em;
+    margin-bottom: 5px;
+    font-size: small;
+}
+table.directions td.num, table.dirsummary td.name {
+    white-space: nowrap;
+    background-color: #eeeeee;
+}
+table.directions td.num {
+    text-align: right;
+}
+table.directions td.desc, table.dirsummary td.value {
+    width: 100%;
+}
+table.directions td.desc, table.directions td.num {
+    cursor: pointer;
+}
+table.directions td.dist {
+    white-space: nowrap;
+    text-align: right;
+}
+table.directions td.gap {
+    text-align: center;
+    border-left: none;
+    border-right: none;
+    padding: 0px;
+    font-family: Arial Unicode MS, sans-serif;
+}
+div.gap {
+    margin: -0.25em;
+    overflow: visible;
+}
+#rhs {
+    position: absolute;
+    z-index: 1000;
+    top: 0px;
+    right: 0px;
+    width: 16em;
+}
+#links {
+    font-size: small;
+    margin-bottom: 1em;
+}
+#links img {
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+.noselect {
+    -moz-user-select: none;
+}
+v\:* {
+    behavior:url(#default#VML);
+}
+#printheader {
+    display: none;
+}
+</style>
+
+<style type="text/css" media="screen">.noscreen {
+    display: none;
+}
+#transparent, #vp {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 5px;
+    height: 5px;
+    visibility: hidden;
+}
+</style>
+<style type="text/css" media="print">.noprint {
+    display: none;
+}
+body {
+    margin: 0;
+    color: black;
+}
+#screenheader, #stats, #bug, #links, #metapanel, #headertitle,td.form, #vp, #transparent {
+    display: none;
+}
+#header {
+    margin-bottom: 7mm;
+}
+#printheader {
+    display: block;
+    position: absolute;
+    top: 0mm;
+    left: 45mm;
+    height: 20mm;
+    width: 100%;
+    color: silver;
+    text-align: left;
+    font-size: 12pt;
+}
+#page {
+    position: static;
+    width: auto;
+    height: auto;
+}
+#map {
+    position: relative;
+    margin-left: 0;
+    margin-right: auto;
+    overflow: hidden;
+}
+#rhs {
+    position: static;
+    margin-top: 5mm;
+    margin-left: 10mm;
+    width: 160mm;
+}
+#rhs #panel {
+    width: 100%;
+}
+#rhs #panel table td div {
+    display: inline;
+    margin: 0px 5px 0px 0px;
+    padding: 0px;
+    text-decoration: none;
+    font-size: 4mm;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+#rhs #panel table {
+    width: 100%;
+    orphans: 2;
+    widows: 2;
+}
+#rhs #panel table td {
+    border: none;
+    text-align: top;
+}
+#rhs #panel table td.name {
+    width: 30mm;
+}
+#rhs #panel table td.value {
+    width: 130mm;
+}
+#rhs #panel div.reverse {
+    display: none;
+}
+#rhs #panel table.directions {
+    margin-top: 4mm;
+}
+table.directions td, table.dirsummary td {
+    font-size: 13pt;
+}
+#rhs #dirlegal {
+    margin-top: 4mm;
+    width: 100%;
+}
+</style>
+
+<script type="text/javascript">//<![CDATA[
+var _u = navigator.userAgent.toLowerCase();
+
+function _ua(t) {
+    return _u.indexOf(t) != -1;
+}
+function _uan(t) {
+    if (!window.RegExp) {
+	return 0;
+    }
+    var r = new RegExp(t + "([0-9]*)");
+    var s = r.exec(_u);
+    var ret = 0;
+    if (s.length >= 2) {ret = s[1];
+    }return ret;
+}
+function _compat() {
+    return ((_ua('opera') &&(_ua('opera 7.5') || 
+			     _ua('opera/7.5') || 
+			     _ua('opera/8'))) ||
+	    (_ua('safari') && _uan('safari/') >= 125) ||
+	    (_ua('msie') &&!_ua('msie 4') && !_ua('msie 5.0') && !_ua('msie 5.1') &&!_ua('msie 3') && !_ua('powerpc')) ||
+	    (document.getElementById && window.XSLTProcessor &&window.XMLHttpRequest && !_ua('netscape6') &&!_ua('netscape/7.0')));
+}
+function _noActiveX() {
+    if (!_ua('msie') || 
+	!document.all || 
+	_ua('opera')) {
+	return false;
+    }
+    var s = false;
+    eval('try {	new ActiveXObject("Microsoft.XMLDOM");} catch (e) { s = true;}');
+    return s;
+}
+var _forms = new Array('maps', 'local', 'directions');
+var _defaults = new Object();
+_defaults['maps'] = 'q';
+_defaults['local'] = 'what';
+_defaults['directions'] = 'start';
+
+function _form(name) {
+    if (!_c) return true;
+    for (var i = 0;
+	 i < _forms.length;
+	 i++) {var n = _forms[i];
+	 var t = document.getElementById(n);
+	 var f = document.getElementById(n + '_form');
+	 if (t) t.className = (n == name) ? 'selected' : null;
+	 if (f) f.style.display = (n == name) ? '' : 'none';
+    }document.getElementById(_defaults[name]).focus();
+    return false;
+}
+function _setPrintHeader(mode) {
+    var t = '';
+    if (!mode) {
+	var q = document.getElementById('q').value;
+	if (q) {
+	    t += '<b>Map</b>';
+	    t += '<br>&nbsp;for <em>' + q + '</em>';
+	}
+    }
+    else if (mode == 'l') {
+	var where = document.getElementById('where').value;
+	var what = document.getElementById('what').value;
+	t += '<b>Local Search</b>';
+	t += '<br>&nbsp;for <em>' + what + '</em>';
+	if (where && where != _wStr) {
+	    t += '<br>&nbsp; in <em>' + where + '</em>';
+	}
+    }
+    else if (mode == 'd') {
+	var start = document.getElementById('start').value;
+	var end = document.getElementById('end').value;
+	t += '<b>Driving directions<b>';
+	t += '<br>&nbsp; from <em>' + start + '</em>';
+	t += '<br>&nbsp; to <em>' + end + '</em>';
+    }
+    document.getElementById('printheader').innerHTML = t;
+}
+function _search(form) {
+    var q = form.q.value;
+    var mode = null;
+    if (document.getElementById('local_form').style.display != 'none') {
+	mode = 'l';
+	if (form.what.value.length == 0) {
+	    form.what.focus();
+	    return;
+	}
+	if (form.where.value.length == 0 || form.where.value == _wStr) {
+	    q = form.what.value;
+	}
+	else {
+	    q = form.what.value + ' loc: ' + form.where.value;
+	}
+    }
+    else if (document.getElementById('directions_form').style.display !='none') {
+	mode = 'd';
+	if (form.start.value.length == 0) {
+	    form.start.focus();
+	    return;
+	}if (form.end.value.length == 0) {
+	    form.end.focus();
+	    return;
+	}
+	q = 'from: ' + form.start.value + ' to: ' + form.end.value;
+    }
+    _m.search(q, document.getElementById('vp'), mode);
+    _setPrintHeader(mode);
+}
+function _submit(form) {
+    if (_c && _m) _search(form);
+    return false;
+}
+function _load(xml, doc) {
+    if (!_c) return;
+    if (!_m) {window._pending = xml;
+    } else {
+	_m.loadXML(xml, doc);
+    }
+}
+function _fd() {
+    var se = document.getElementById('start');
+    var ee = document.getElementById('end');
+    var s = se.value;
+    se.value = ee.value;
+    ee.value = s;
+}
+function _blur() {
+    document.getElementById('q').blur();
+    document.getElementById('what').blur();
+    document.getElementById('where').blur();
+    document.getElementById('start').blur();
+    document.getElementById('end').blur();
+}
+var _wStr = 'the map area below';
+function _wfocus(w) {
+    if (w.value == _wStr) {
+	w.value = '';
+	w.style.color = 'black';
+    }
+}
+function _wblur(w) {
+    if (w.value.length == 0 || w.value == _wStr) {
+	w.value = _wStr;
+	w.style.color = 'gray';
+    }
+}
+function _email() {
+    if (!_c || !_m) return;
+    _m.email();
+}
+function _print() {
+    if (!_c || !_m) return;
+    _m.print();
+}
+function _createMap() {
+    _m = new _MapsApplication(document.getElementById('map'),document.getElementById('panel'),document.getElementById('metapanel'),document.getElementById('linktopage'),document.getElementById('feedback'),document.getElementById('toggle'));
+    _m.loadMap(null);
+    _m.map.onmousedown = function() { _blur(); };
+}
+function _checkLoad() {/* _createMap(); */
+    if (window._pending) {
+	_load(window._pending);
+    }
+    window._pending = null;
+}
+function getDirectionsStart() {
+    return document.getElementById('start');
+}
+function getDirectionsEnd() {
+    return document.getElementById('end');
+}
+function directionsSearch(s, e, ds) {
+    _form('directions');
+    var se = getDirectionsStart();
+    var ee = getDirectionsEnd();
+    if (s) se.value = s;
+    if (e) ee.value = e;
+    if (ds) {
+	_search(document.getElementById('form'));
+    }
+    else {
+	if (s && !e) ee.select();
+	else se.select();
+    }
+}
+function search(q) {
+    _form('maps');
+    document.getElementById('q').value = q;
+    _search(document.getElementById('form'));
+}
+function iwOnLoadTo() {
+    var s = document.getElementById("infoStart");
+    var ia = s.getAttribute("a");
+    if (ia != getDirectionsStart().value) {
+	s.value = getDirectionsStart().value;
+	getDirectionsEnd().value = ia;
+    }
+    s.select();
+    _makePasteBox(s);
+}
+function iwOnLoadFrom() {
+    var e = document.getElementById("infoEnd");
+    var ia = e.getAttribute("a");
+    if (ia != getDirectionsEnd().value) {
+	e.value = getDirectionsEnd().value;
+	getDirectionsStart().value = ia;
+    }
+    e.select();
+    _makePasteBox(e);
+}
+_m = null;
+_sf = 'hl=en';
+_tv = '.2';
+_fc = false;
+_c = _fc || _compat();
+window.document.vpage = '<?xml version="1.0"?><page><title>100 Munhall Rd., Pittsburgh, PA</title><query>100 Munhall Rd., Pittsburgh, PA</query><center lat="40.438049" lng="-79.925500"/><span lat="0.026917" lng="0.044929"/><overlay panelStyle="/maps?file=gp&amp;
+hl=en"><location infoStyle="/maps?file=gi&amp;hl=en" id="A"><point lat="40.433431" lng="-79.925479"/><icon image="/mapfiles/marker.png" class="local"/><info><title xml:space="preserve"></title><address><line>5600 Munhall Rd</line><line>Pittsburgh, PA 15217</line></address></info></location></overlay></page>';
+function _loadhistory(id) {
+    eval('try {var vpage = document.getElementById(id).getAttribute("vpage");
+if (vpage) {_load(vpage);
+window.document.vpage = vpage;
+}} catch (e) {}');
+}
+function _savehistory(id) {
+    eval('try {if (window.document.currentvpage) {document.getElementById(id).setAttribute("vpage",window.document.currentvpage);}} catch (e) {}');
+}
+//]]>
+</script>
+</head>
+<body onload="_checkLoad()"><table id="header"><tr><td class="logo"><a href="/maps"><img id="logo" src="/mapfiles/maps_res_logo.gif" width="150" height="55" alt="Go to Google Maps Home"/></a></td><td class="form" width="100%"><form id="form" action="/maps" method="get" onsubmit="return _submit(this)"><table><tr><td class="menu"><a href="/maps" class="selected" id="maps" onclick="return _form('maps')">Maps</a>&nbsp;
+&nbsp;
+&nbsp;
+<a href="/maps" id="local" onclick="return _form('local')">Local Search</a>&nbsp;
+&nbsp;
+&nbsp;
+<a href="/maps" id="directions" onclick="return _form('directions')">Directions</a>&nbsp;
+&nbsp;
+&nbsp;
+</td></tr><tr><td style="vertical-align: top"><table><tr><td><table id="maps_form"><tr><td><input tabindex="0" name="q" id="q" type="text" size="50" value="100 Munhall Rd., Pittsburgh, PA"/></td></tr><tr><td class="boxlabel">&nbsp;
+</td></tr></table><table id="local_form" style="display:none"><tr><td style="white-space: nowrap"><input tabindex="1" name="what" id="what" type="text" size="36" value=""/>&nbsp;
+</td><td><input tabindex="2" name="where" id="where" type="text" size="36" value="" onfocus="_wfocus(this)" onblur="_wblur(this)"/></td></tr><tr><td class="boxlabel">What &nbsp;
+ <span class="example">e.g., pizza</span></td><td class="boxlabel">Where &nbsp;
+ <span class="example">e.g., Poughkeepsie, NY</span></td></tr></table><table id="directions_form" style="display:none"><tr><td><input tabindex="3" name="start" id="start" type="text" size="36" value=""/></td><td class="reverse"><a href="javascript:void(0)" onclick="_fd()"><img src="/mapfiles/ddirflip.gif" width="10" height="14" alt="Switch start and end address" title="Switch start and end address"/></a></td><td><input tabindex="4" name="end" id="end" type="text" size="36" value=""/></td></tr><tr><td class="boxlabel">Start address</td><td></td><td class="boxlabel">End address</td></tr></table></td><td style="vertical-align: top;
+ white-space: nowrap">&nbsp;
+<input tabindex="5" name="btnG" id="btnG" type="submit" value="Search"/></td><td class="help"><div><a href="http://www.google.com/help/faq_maps.html">Help</a></div><div><a href="http://www.google.com/support/maps/bin/request.py" id="feedback">Send Feedback</a></div></td></tr></table></td></tr></table></form></td></tr></table><table id="headertitle"><tr><td class="title">Maps</td><td id="toggle">&nbsp;
+</td></tr></table><div id="printheader"></div>
+<script type="text/javascript">//<![CDATA[
+if (_c) {
+    _wblur(document.getElementById("where"));
+    document.getElementById("q").focus();
+    document.write('<div id="loading">Loading...</div>');
+}
+//]]></script>
+<script type="text/javascript">//<![CDATA[
+_mSiteName = 'Google Maps';
+_mEmailSubject = 'Google Map';
+_mSearching = 'Searching...';
+_mZoomIn = 'Zoom In';
+_mZoomOut = 'Zoom Out';
+_mZoomSet = 'Click to set zoom level';
+_mZoomDrag = 'Drag to zoom';
+_mPanWest = 'Go left';
+_mPanEast = 'Go right';
+_mPanNorth = 'Go up';
+_mPanSouth = 'Go down';
+_mLastResult = 'Return to the last result';
+_mGoogleCopy = '&copy;
+2005 Google';
+_mDataCopy = 'Map data &copy;2005 NAVTEQ&trade;, Tele Atlas';
+_mNormalMap = 'Map';
+function _script(src) {
+    var ret = '<' + 'script src="' + src + '"' +' type="text/javascript"><' + '/script>';
+    document.write(ret);
+}
+if (_c) {
+    _script("/mapfiles/maps.5.js");
+}//]]>
+</script>
+<script type="text/javascript">//<![CDATA[
+if (_c && _noActiveX()) {
+    document.getElementById('loading').style.display = 'none';
+    document.write('<p>ActiveX is not enabled in your browser. If your browser is Internet Explorer, you must have ActiveX enabled to use Google Maps.</p>');
+}
+else if (_c) {
+    _makePasteBox(document.getElementById('q'));
+    _makePasteBox(document.getElementById('what'));
+    _makePasteBox(document.getElementById('where'));
+    _makePasteBox(document.getElementById('start'));
+    _makePasteBox(document.getElementById('end'));
+    document.getElementById('loading').style.display = 'none';
+    document.write('<div id="page">');
+    document.write('<div id="map"></div>');
+    document.write('<div id="rhs"><div id="links"><a style="text-decoration:none;white-space:nowrap" href="javascript:_print()"><img src="/mapfiles/print_icon.gif" alt="Print"/>&nbsp;<span style="text-decoration:underline">Print</span></a> &nbsp; <a style="text-decoration:none;white-space:nowrap" href="javascript:_email()"><img src="/mapfiles/email_icon.gif" alt="Email"/>&nbsp;<span style="text-decoration:underline">Email</span></a> &nbsp; <a style="text-decoration:none;white-space:nowrap" id="linktopage" href=""><img src="/mapfiles/link_icon.gif" alt="Link to this page"/>&nbsp;<span style="text-decoration:underline">Link to this page</span></a></div><div id="metapanel"></div><div id="panel"></div></div>');
+    document.write('</div>');
+    _createMap();
+}
+else {
+    document.write('<p>Your browser is not officially supported by Google Maps. We currently support the following browsers:</p><ul><li><a href="http://www.microsoft.com/windows/ie/downloads/default.asp">IE</a> 5.5+ (Windows)</li><li><a href="http://www.mozilla.org/products/firefox/">Firefox</a> 0.8+ (Windows, Mac, Linux)</li><li><a href="http://www.apple.com/safari/download/">Safari</a> 1.2.4+ (Mac)</li><li><a href="http://channels.netscape.com/ns/browsers/download.jsp">Netscape</a> 7.1+ (Windows, Mac, Linux)</li><li><a href="http://www.mozilla.org/products/mozilla1.x/">Mozilla</a> 1.4+ (Windows, Mac, Linux)</li><li><a href="http://www.opera.com/download/">Opera</a> 7+ (Windows, Mac, Linux)</li></ul><p>We recommend you download one of the browsers above, or you can try to <a href="/maps?q=100%20Munhall%20Rd.%2C%20Pittsburgh%2C%20PA&amp;ll=40.438049%2C-79.925500&amp;spn=0.026917%2C0.044929&amp;hl=en&amp;fc=1">load Google Maps</a> in your current browser.</p>');
+}//]]>
+</script>
+<noscript><p>JavaScript must be enabled in order for you to use Google Maps. However, it seems JavaScript is either disabled or not supported by your browser. To view Google Maps, enable JavaScript by changing your browser options, and then <a href="/maps?q=100%20Munhall%20Rd.%2C%20Pittsburgh%2C%20PA&amp;
+ll=40.438049%2C-79.925500&amp;
+spn=0.026917%2C0.044929&amp;
+hl=en">try again</a>.</p></noscript><img id="transparent" src="/mapfiles/transparent.gif"/><iframe name="vp" id="vp" src="/maps?file=home"></iframe><div id="savehistory"style="behavior:url(#default#saveHistory);
+display:none"onload="_loadhistory(this.id)" onsave="_savehistory(this.id)"><div id="savefavorite"style="behavior:url(#default#saveFavorite);
+                display:none"onload="_loadhistory(this.id)" onsave="_savehistory(this.id)"></body></html>

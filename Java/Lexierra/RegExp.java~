@@ -1,0 +1,7 @@
+public class Test {
+    public static void main (String[] args) {
+	DictSearch.search("abc");
+	//	new Dict();
+	//	System.out.println(Dict.dict[4322].yomi);
+    }
+}

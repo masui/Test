@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+lineno = 0
+ARGF.each { |line|
+  if line =~ /\["(.*)", "(.*)", (.*), (.*)\],/ then
+    puts "\tdict[#{lineno}] = new DictEntry(\"#{$1}\", \"#{$2}\", #{$3}, #{$4});"
+    lineno += 1
+  end
+}
+

@@ -1,0 +1,39 @@
+s = "abc [[def]] ghi";
+s = "abc [[http://aaaa.com/ abc]] ghi";
+s = "abc  [[def]][[ghi]] jkl";
+
+matched = [];
+matchid = 0;
+
+while(a = s.match(/^(.*)\[\[(([^\]]|\][^\]]|[^\]]\])*)\]\](.*)$/)){
+    t = a[2];
+    if(b = t.match(/^(http[^ ]+) (.*)$/)){
+	matched.push('<a href="' + b[1] + '">' + b[2] + '</a>');
+    }
+    else {
+	matched.push('<a href="' + 'root' + '">' + a[2] + '</a>');
+    }
+    s = a[1] + '<<<' + matchid + '>>>' + a[4];
+    matchid++;
+}
+
+print(s);
+aa = s.split(/ /);
+print(aa.length);
+print(matched);
+
+for(i=0;i<aa.length;i++){
+    s = aa[i];
+    while(a = s.match(/^(.*)<<<(\d+)>>>(.*)$/)){
+	s = a[1] + matched[a[2]] + a[3];
+    }
+    aa[i] = s
+}
+for(i=0;i<aa.length;i++){
+    s = aa[i];
+    aa[i] = "<span id='"+i+"'>" + s + "</span>";
+}
+
+print(aa);
+
+

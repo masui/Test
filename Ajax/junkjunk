@@ -1,0 +1,55 @@
+62,64c62,63
+<     this.color = (this.color == "#FAF5D4") ? "#EBCC67" : "#FAF5D4";
+< //    this.html += ("&lt;div style='background-color:"+this.color+"'&gt;" + this.htmlchar(html) + "&lt;/div&gt;\n");
+<     this.html += ("&lt;div style='background-color:"+this.color+"'&gt;" + html + "&lt;/div&gt;\n");
+---
+>   	this.color = (this.color == "#FAF5D4") ? "#EBCC67" : "#FAF5D4";
+>     this.html += ("<div style='background-color:"+this.color+"'>" + this.htmlchar(html) + "</div>\n");
+92c91
+<       return "&lt;"+(typeof obj)+":"+obj+"&gt;";
+---
+>       return "<"+(typeof obj)+":"+obj+">";
+113c112
+< 	      str += ""+key+"=&gt;undefined";
+---
+> 	      str += ""+key+"=>undefined";
+118,119c117,118
+< 			  // 数値の場合（ key=&gt;value ）
+< 			  str += ""+key+"=&gt;"+value+"";
+---
+> 			  // 数値の場合（ key=>value ）
+> 			  str += ""+key+"=>"+value+"";
+122,123c121,122
+< 			  // 文字列の場合（ key=&gt;"value" ）
+< 			  str += ""+key+'=&gt;"'+value+'"';
+---
+> 			  // 文字列の場合（ key=>"value" ）
+> 			  str += ""+key+'=>"'+value+'"';
+130c129
+< 			  // オブジェクトの場合（ key=&gt;value ）
+---
+> 			  // オブジェクトの場合（ key=>value ）
+132c131
+< 			  str += ""+key+"=&gt;"+value+"";
+---
+> 			  str += ""+key+"=>"+value+"";
+135,136c134,135
+< 			  // 上記以外の場合（ key=&gt;&lt;type:value&gt; ）
+< 		  	  str += ""+key+"=&gt;&lt;"+(typeof value)+":"+value+"&gt;";
+---
+> 			  // 上記以外の場合（ key=><type:value> ）
+> 		  	  str += ""+key+"=><"+(typeof value)+":"+value+">";
+148,152c147,151
+<   	str = str.replace(/&amp;/g, "&amp;amp;");
+<   	str = str.replace(/&lt;/g, "&amp;lt;");
+<   	str = str.replace(/&gt;/g, "&amp;gt;");
+<   	str = str.replace(/\"/g, "&amp;quot;");
+<   	str = str.replace(/\n/g, "&lt;br&gt;\n");
+---
+>   	str = str.replace(/&/g, "&amp;");
+>   	str = str.replace(/</g, "&lt;");
+>   	str = str.replace(/>/g, "&gt;");
+>   	str = str.replace(/\"/g, "&quot;");
+>   	str = str.replace(/\n/g, "<br>\n");
+166d164
+< 

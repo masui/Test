@@ -14,4 +14,6 @@ test1: test1.o
 test2: test2.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o test2 test2.c $(MINGLIB) $(SDLLIB)
 
+showfont:
+	cc showfont.c -lsdl2 -lsdl2_ttf -o showfont
 

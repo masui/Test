@@ -1,4 +1,7 @@
-// [[http://gyazo.com/eb908e4ab8dff1c269577ef52d30f008.png]] Android端末に矩形を描く
+// [[http://gyazo.com/eb908e4ab8dff1c269577ef52d30f008.png]] 端末に矩形を描く
+//
+// [[http://ja.wikipedia.org/wiki/文芸的プログラミング 文芸的プログラミング]]ができる!
+//
 package com.pitecan.rectangle;
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +14,6 @@ public class Rectangle extends Activity
  @Override public void onCreate(Bundle savedInstanceState)
  {
   super.onCreate(savedInstanceState);
-  requestWindowFeature(Window.FEATURE_NO_TITLE);
   setContentView(new GraphicsView(this));
  }
 }
